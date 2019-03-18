@@ -1,28 +1,47 @@
 package edu.koichi.packs.utilities;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class RunCommand {
-  public static String run(String... args) {
-    // TODO: gitコマンドを打てるように
 
-    // try {
-    // Process process = new ProcessBuilder(args).start();
-    // InputStream is = process.getInputStream();
-    // InputStreamReader isr = new InputStreamReader(is, "UTF-8");
-    // BufferedReader reader = new BufferedReader(isr);
-    // StringBuilder builder = new StringBuilder();
-    // int c;
-    // while ((c = reader.read()) != -1) {
-    // builder.append((char) c);
-    // }
-    // // コンソール出力される文字列の格納
-    // String text = builder.toString();
-    // // 終了コードの格納(0:正常終了 1:異常終了)
-    // int ret = process.waitFor();
-    // System.out.println(text);
-    // System.out.println(ret);
-
-    // } catch (IOException | InterruptedException e) {
-    // e.printStackTrace();
-    return args[0];
+  /**
+   * Reference) https://chat-messenger.com/blog/java/runtime-getruntime-exec
+   *
+   */
+  public static String run(String cmd, String relatilePathForWorkingDirectory) {
+    String retStr = "";
+    try {
+      String[] args = cmd.split(" ");
+      String LINE_SEPA = "\n";
+      ProcessBuilder pb = new ProcessBuilder(args);
+      pb.directory(new File(relatilePathForWorkingDirectory));
+      Process p = pb.start();
+      InputStream in = null;
+      BufferedReader br = null;
+      try {
+        in = p.getInputStream();
+        StringBuffer out = new StringBuffer();
+        br = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while ((line = br.readLine()) != null) {
+          out.append(line + LINE_SEPA);
+        }
+        retStr = out.toString();
+      } finally {
+        if (br != null) {
+          br.close();
+        }
+        if (in != null) {
+          in.close();
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return retStr;
   }
 }
