@@ -7,30 +7,39 @@ import java.util.List;
 import edu.koichi.packs.entities.Diff;
 import edu.koichi.packs.utilities.RunCommand;
 
+/**
+ * Repository has many Commits. Commit has many Diffs.
+ */
 public class Commit {
+  private String relativeRepositoryPath;
   public String sha;
   public String message;
-  public List<String> insertedLines;
-  public List<String> deletedLines;
+  public List<String> insertedLines = new ArrayList<>();
+  public List<String> deletedLines = new ArrayList<>();
 
-  public Commit(String sha, String message) {
+  public Commit(String sha, String message, String relativeRepositoryPath) {
     this.sha = sha;
     this.message = message;
+    this.relativeRepositoryPath = relativeRepositoryPath;
     this.separateDiffsIntoInsertAndDelete();
   }
 
+  /**
+   * 差分を挿入行と削除行に振り分ける
+   */
   private void separateDiffsIntoInsertAndDelete() {
     for (Diff diff : this.getDiffs()) {
       if (diff.isInsertedLine()) {
-        this.insertedLines.add(diff.toString());
-      } else if (diff.isdeletedLine()) {
-        this.deletedLines.add(diff.toString());
+        this.insertedLines.add(diff.toCode());
+      } else if (diff.isDeletedLine()) {
+        this.deletedLines.add(diff.toCode());
       }
     }
   }
 
   private List<Diff> getDiffs() {
-    String diffStr = RunCommand.run("git", "show", this.sha);
+    // TODO: 拡張子を指定できるように ex) git show <sha> -- '*.java'
+    String diffStr = RunCommand.run(String.format("git show %s", this.sha), this.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
     List<Diff> diffs = new ArrayList<>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));

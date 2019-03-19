@@ -1,7 +1,9 @@
 package edu.koichi.packs.entities;
 
 /**
- * ex1) - if (hoge) ex2) + hoge.fuga();
+ * ex1) - if (hoge)
+ *
+ * ex2) + hoge.fuga();
  */
 public class Diff {
   public String diffLine;
@@ -11,30 +13,49 @@ public class Diff {
   }
 
   public boolean isInsertedLine() {
-    if (this.diffLine.substring(0, 2) == "+++") {
+    if (this.diffLine.isEmpty())
+      return false;
+    if (this.diffLine.charAt(0) == '+') {
+      if (this.diffLine.length() < 3)
+        return true;
       // 最初が+++で始まるのは、
-      // +++ b/(変更されたファイルのパス)のような時
-      return false;
+      // +++ b/(変更されたファイルのパス)のような時なので挿入行じゃない
+      if (this.diffLine.substring(0, 2) == "+++")
+        return false;
+      return true;
     }
-    return this.diffLine.charAt(0) == '+';
+    return false;
   }
 
-  public boolean isdeletedLine() {
-    if (this.diffLine.substring(0, 2) == "---") {
+  public boolean isDeletedLine() {
+    if (this.diffLine.isEmpty())
+      return false;
+    if (this.diffLine.charAt(0) == '-') {
+      if (this.diffLine.length() < 3)
+        return true;
       // 最初が---で始まるのは、
-      // --- a/(変更されたファイルのパス)のような時
-      return false;
+      // --- a/(変更されたファイルのパス)のような時なので削除行じゃない
+      if (this.diffLine.substring(0, 2) == "---")
+        return false;
+      return true;
     }
-    return this.diffLine.charAt(0) == '-';
+    return false;
   }
 
-  public String toString() {
-    for (int i = 1; i < this.diffLine.length(); i++) {
-      if (this.diffLine.charAt(i) == ' ') {
-        continue;
-      } else {
-        return this.diffLine.substring(i);
+  /**
+   * 差分を表す文字列からコード部分を抜き出す
+   */
+  public String toCode() {
+    try {
+      for (int i = 1; i < this.diffLine.length(); i++) {
+        if (this.diffLine.charAt(i) == ' ') {
+          continue;
+        } else {
+          return this.diffLine.substring(i);
+        }
       }
+    } catch (StringIndexOutOfBoundsException e) {
+      e.printStackTrace();
     }
     return "";
   }

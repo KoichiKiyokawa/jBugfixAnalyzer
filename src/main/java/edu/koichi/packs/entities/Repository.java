@@ -7,21 +7,20 @@ import java.util.List;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
-  public String relativeFilePath;
+  private String relativeRepositoryPath;
 
   public Repository(String relativeFilePath) {
-    this.relativeFilePath = relativeFilePath;
+    this.relativeRepositoryPath = relativeFilePath;
   }
 
   public List<Commit> getCommits() {
     List<Commit> commits = new ArrayList<>();
-    // String logStr = RunCommand.run("git", "log", "--oneline");
-    String logStr = "- hoge();\n+ fuga();"; // for test
+    String logStr = RunCommand.run("git log --oneline", this.relativeRepositoryPath);
     Arrays.stream(logStr.split("\n")).forEach(log -> {
       String[] splitedLog = log.split(" ");
       String sha = splitedLog[0];
       String msg = splitedLog[1];
-      commits.add(new Commit(sha, msg));
+      commits.add(new Commit(sha, msg, this.relativeRepositoryPath));
     });
     return commits;
   }
