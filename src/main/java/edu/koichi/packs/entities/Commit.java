@@ -1,8 +1,12 @@
 package edu.koichi.packs.entities;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import edu.koichi.packs.entities.Diff;
 import edu.koichi.packs.utilities.RunCommand;
@@ -24,6 +28,17 @@ public class Commit {
     this.separateDiffsIntoInsertAndDelete();
   }
 
+  public boolean isBugfixCommit() {
+    Configration conf = new Configration();
+    String[] words = this.message.split(" ");
+    for (String word : words) {
+      if (word == "fix" || word == "Fix") {
+        return !Arrays.asList(conf.exceptionOfFixWords).contains(word);
+      }
+    }
+    return false;
+  }
+
   /**
    * 差分を挿入行と削除行に振り分ける
    */
@@ -39,7 +54,8 @@ public class Commit {
 
   private List<Diff> getDiffs() {
     // TODO: 拡張子を指定できるように ex) git show <sha> -- '*.java'
-    String diffStr = RunCommand.run(String.format("git show %s", this.sha), this.relativeRepositoryPath);
+    // TODO: とりま、ハードコーディングしたが、プロパティから読み込んだ拡張子を使うように
+    String diffStr = RunCommand.run(String.format("git show %s -- '*.java'", this.sha), this.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
     List<Diff> diffs = new ArrayList<>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));

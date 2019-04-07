@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 public class RunCommand {
 
   /**
+   * 指定したディレクトリに移動してから、コマンドを実行
+   *
    * Reference) https://chat-messenger.com/blog/java/runtime-getruntime-exec
    *
    */
