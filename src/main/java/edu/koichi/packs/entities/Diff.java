@@ -20,7 +20,7 @@ public class Diff {
         return true;
       // 最初が+++で始まるのは、
       // +++ b/(変更されたファイルのパス)のような時なので挿入行じゃない
-      if (this.diffLine.substring(0, 2) == "+++")
+      if (this.diffLine.substring(0, 3).equals("+++"))
         return false;
       return true;
     }
@@ -35,7 +35,7 @@ public class Diff {
         return true;
       // 最初が---で始まるのは、
       // --- a/(変更されたファイルのパス)のような時なので削除行じゃない
-      if (this.diffLine.substring(0, 2) == "---")
+      if (this.diffLine.substring(0, 3).equals("---"))
         return false;
       return true;
     }
