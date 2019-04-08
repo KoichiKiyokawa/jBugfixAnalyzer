@@ -43,7 +43,7 @@ public class Diff {
   }
 
   /**
-   * 差分を表す文字列からコード部分を抜き出す
+   * 差分を表す文字列からコード部分を抜き出すために、インデントを削除
    */
   public String toCode() {
     try {
