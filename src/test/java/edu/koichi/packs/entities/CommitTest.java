@@ -22,4 +22,9 @@ public class CommitTest extends TestCase {
     Commit commit = new Commit("barbar", "Add Fixnum function", "./");
     assertEquals(commit.isBugfixCommit(), false);
   }
+
+  // public void testSeparation() throws Exception {
+  //   Commit commit = new Commit("7436699b7be310865dd355e0d2f8bba850486c5f", "Initial commit", "./");
+  //   assertEquals(commit.insertedLines.size(), 2);
+  // }
 }
