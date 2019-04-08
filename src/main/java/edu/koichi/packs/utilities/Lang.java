@@ -12,4 +12,12 @@ public class Lang {
   public static String uncapitalize(String str) {
     return str.substring(0, 1).toLowerCase() + str.substring(1);
   }
+
+  public static String toggleCapital(String str) {
+    if (isCapital(str)) {
+      return uncapitalize(str);
+    } else {
+      return capitalize(str);
+    }
+  }
 }

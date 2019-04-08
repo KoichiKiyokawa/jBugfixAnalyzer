@@ -36,14 +36,8 @@ public class Commit {
         if (this.message.contains(exWord)) {
           return false;
         }
-        if (Lang.isCapital(exWord)) {
-          if (this.message.contains(Lang.uncapitalize(exWord))) {
-            return false;
-          }
-        } else {
-          if (this.message.contains(Lang.capitalize(exWord))) {
-            return false;
-          }
+        if (this.message.contains(Lang.toggleCapital(exWord))) {
+          return false;
         }
       }
       return true;
