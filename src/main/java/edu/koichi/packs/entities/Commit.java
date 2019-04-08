@@ -32,16 +32,16 @@ public class Commit {
   public boolean isBugfixCommit() {
     Configration conf = new Configration();
     if (this.message.contains("fix") || this.message.contains("Fix")) {
-      for (String exword : conf.exceptionOfFixWords) {
-        if (this.message.contains(exword)) {
+      for (String exWord : conf.exceptionOfFixWords) {
+        if (this.message.contains(exWord)) {
           return false;
         }
-        if (Lang.isCapital(exword)) {
-          if (this.message.contains(Lang.uncapitalize(exword))) {
+        if (Lang.isCapital(exWord)) {
+          if (this.message.contains(Lang.uncapitalize(exWord))) {
             return false;
           }
         } else {
-          if (this.message.contains(Lang.capitalize(exword))) {
+          if (this.message.contains(Lang.capitalize(exWord))) {
             return false;
           }
         }
