@@ -8,9 +8,19 @@ public class DiffTest extends TestCase {
     assertEquals(diff.isInsertedLine(), true);
   }
 
+  public void testIsInsertedLineException() {
+    Diff diff = new Diff("+++ b/src/test/java/edu/koichi/packs/utilities/LangTest.java");
+    assertEquals(diff.isInsertedLine(), false);
+  }
+
   public void testIsDeletedLine() {
     Diff diff = new Diff("-package main");
-    assertEquals(diff.isInsertedLine(), false);
+    assertEquals(diff.isDeletedLine(), true);
+  }
+
+  public void testIsDeletedLineException() {
+    Diff diff = new Diff("--- a/src/main/java/edu/koichi/packs/entities/Commit.java");
+    assertEquals(diff.isDeletedLine(), false);
   }
 
   public void testSeparation() {
