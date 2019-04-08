@@ -1,6 +1,12 @@
+# maven
 /.settings/
 /.classpath
 /.DS_Store
 /.project
 target/
+
+# editor
 .vscode/
+
+# log
+dev.log
