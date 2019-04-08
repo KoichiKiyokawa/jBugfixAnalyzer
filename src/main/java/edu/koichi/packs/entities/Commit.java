@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 import edu.koichi.packs.entities.Diff;
+import edu.koichi.packs.utilities.Lang;
 import edu.koichi.packs.utilities.RunCommand;
 
 /**
@@ -30,11 +31,22 @@ public class Commit {
 
   public boolean isBugfixCommit() {
     Configration conf = new Configration();
-    String[] words = this.message.split(" ");
-    for (String word : words) {
-      if (word == "fix" || word == "Fix") {
-        return !Arrays.asList(conf.exceptionOfFixWords).contains(word);
+    if (this.message.contains("fix") || this.message.contains("Fix")) {
+      for (String exword : conf.exceptionOfFixWords) {
+        if (this.message.contains(exword)) {
+          return false;
+        }
+        if (Lang.isCapital(exword)) {
+          if (this.message.contains(Lang.uncapitalize(exword))) {
+            return false;
+          }
+        } else {
+          if (this.message.contains(Lang.capitalize(exword))) {
+            return false;
+          }
+        }
       }
+      return true;
     }
     return false;
   }
