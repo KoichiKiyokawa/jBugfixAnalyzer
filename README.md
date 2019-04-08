@@ -1,4 +1,5 @@
 # jBugfixAnalyzer
+[![Build Status](https://travis-ci.org/KoichiKiyokawa/jBugfixAnalyzer.svg?branch=master)](https://travis-ci.org/KoichiKiyokawa/jBugfixAnalyzer)
 
 # Dependencies
 
