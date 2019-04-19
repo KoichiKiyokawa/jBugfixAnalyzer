@@ -9,9 +9,13 @@ import java.io.InputStreamReader;
 public class RunCommand {
 
   /**
-   * 指定したディレクトリに移動してから、コマンドを実行
+   * 指定したディレクトリに移動してから、コマンドを実行 Reference)
+   * https://chat-messenger.com/blog/java/runtime-getruntime-exec
    *
-   * Reference) https://chat-messenger.com/blog/java/runtime-getruntime-exec
+   * @param cmd                             実行するコマンド
+   * @param relatilePathForWorkingDirectory 移動先のディレクトリ
+   *
+   * @return 実行結果の文字列
    *
    */
   public static String run(String cmd, String relatilePathForWorkingDirectory) {
