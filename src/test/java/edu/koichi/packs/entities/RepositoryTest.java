@@ -35,9 +35,14 @@ public class RepositoryTest extends TestCase {
   public void testCheckout() {
     Commit secondCommit = repo.commits.get(1);
     repo.checkout(secondCommit);
-    assertEquals(secondCommit.message, "Add testY");
+    assertEquals(secondCommit.message, "Add Test9.java");
     Repository repo2 = new Repository(testRepoDir);
     assertEquals(repo2.commits.size(), initialCommitLength - 1);
     RunCommand.run("git checkout master", testRepoDir);
+  }
+
+  public void testGetSourceFiles() {
+    String[] files = repo.getSourceFilenames();
+    assertEquals(files.length, 10);
   }
 }
