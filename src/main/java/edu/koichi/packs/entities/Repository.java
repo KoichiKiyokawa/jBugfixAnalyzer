@@ -8,7 +8,7 @@ import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
   private String relativeRepositoryPath;
-  protected List<Commit> commits = new ArrayList<Commit>();
+  public List<Commit> commits = new ArrayList<Commit>();
 
   public Repository(String relativeFilePath) {
     this.relativeRepositoryPath = relativeFilePath;
