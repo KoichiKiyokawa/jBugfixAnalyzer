@@ -32,4 +32,10 @@ public class Repository {
   public void checkout(Commit commit) {
     RunCommand.run(String.format("git checkout %s", commit.sha), relativeRepositoryPath);
   }
+
+  public String[] getSourceFilenames() {
+    // TODO: ハードコーディングで拡張子を指定しているがプロパティから読み込めるようにする
+    String filenames = RunCommand.run("git ls-files *.java", relativeRepositoryPath);
+    return filenames.split("\n");
+  }
 }
