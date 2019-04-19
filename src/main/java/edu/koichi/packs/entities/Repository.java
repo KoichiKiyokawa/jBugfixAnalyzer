@@ -8,9 +8,13 @@ import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
   private String relativeRepositoryPath;
+  protected List<Commit> commits = new ArrayList<Commit>();
 
   public Repository(String relativeFilePath) {
     this.relativeRepositoryPath = relativeFilePath;
+    for (Commit c : getCommits()) {
+      commits.add(c);
+    }
   }
 
   public List<Commit> getCommits() {
@@ -23,5 +27,9 @@ public class Repository {
       commits.add(new Commit(sha, msg, this.relativeRepositoryPath));
     });
     return commits;
+  }
+
+  public void checkout(Commit commit) {
+    RunCommand.run(String.format("git checkout %s", commit.sha), relativeRepositoryPath);
   }
 }
