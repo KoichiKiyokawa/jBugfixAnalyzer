@@ -5,7 +5,8 @@ import edu.koichi.packs.verifications.VerifyRedundancy;
 
 public class Main {
   public static void main(String args[]) {
-    Repository repo = new Repository("/Users/koichi/jgenprog/gitpy/jfreechart");
+    System.out.println(args[0]);
+    Repository repo = new Repository(args[0]);
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     vRedundancy.verify();
   }
