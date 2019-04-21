@@ -28,5 +28,6 @@ public class CommitTest extends UseTestRepo {
     Commit firstCommit = repo.commits.get(0);
     assertEquals(firstCommit.message, "Fix Test10.java");
     assertEquals(firstCommit.insertedLines.size(), 1);
+    assertEquals(firstCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
   }
 }

@@ -25,11 +25,11 @@ public class DiffTest extends TestCase {
 
   public void testSeparation() {
     Diff diff = new Diff("+for (int i = 0 ; i < 10; i++ {\n");
-    assertEquals(diff.toCode(), "for (int i = 0 ; i < 10; i++ {\n");
+    assertEquals(diff.toCode(), "for (int i = 0 ; i < 10; i++ {");
   }
 
   public void testSeparationWithIndent() {
     Diff diff = new Diff("+  for (int i = 0 ; i < 10; i++ {\n");
-    assertEquals(diff.toCode(), "for (int i = 0 ; i < 10; i++ {\n");
+    assertEquals(diff.toCode(), "for (int i = 0 ; i < 10; i++ {");
   }
 }

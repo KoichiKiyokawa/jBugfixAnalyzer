@@ -43,20 +43,9 @@ public class Diff {
   }
 
   /**
-   * 差分を表す文字列からコード部分を抜き出すために、インデントを削除
+   * 差分を表す文字列からコード部分を抜き出すために、インデントと末尾の改行を削除
    */
   public String toCode() {
-    try {
-      for (int i = 1; i < this.diffLine.length(); i++) {
-        if (this.diffLine.charAt(i) == ' ') {
-          continue;
-        } else {
-          return this.diffLine.substring(i);
-        }
-      }
-    } catch (StringIndexOutOfBoundsException e) {
-      e.printStackTrace();
-    }
-    return "";
+    return this.diffLine.substring(1).trim();
   }
 }
