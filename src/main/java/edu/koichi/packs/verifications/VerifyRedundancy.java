@@ -1,5 +1,10 @@
-package edu.koichi.packs.scenarios;
+package edu.koichi.packs.verifications;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +15,13 @@ import edu.koichi.packs.entities.Repository;
  * 冗長化仮説の検証
  */
 public class VerifyRedundancy {
+  private Repository repo;
   private int bugfixCommitCount = 0;
   private int insertedBugfixLineCount = 0;
   protected List<String> hasIngredientInsertedLines = new ArrayList<String>();
 
   protected void verify(String repoPath) {
-    Repository repo = new Repository(repoPath);
+    this.repo = new Repository(repoPath);
     List<Commit> commits = repo.commits;
     for (int i = 0; i < commits.size(); i++) {
       Commit c = commits.get(i);
@@ -25,7 +31,7 @@ public class VerifyRedundancy {
       List<String> insertedLines = c.insertedLines;
       this.insertedBugfixLineCount += insertedLines.size();
       this.bugfixCommitCount++;
-      
+
       repo.checkout(commits.get(i + 1));
       for (String sourceFilename : repo.getSourceFilenames()) {
         checkSourceHasIngredient(insertedLines, sourceFilename);
@@ -41,11 +47,18 @@ public class VerifyRedundancy {
    * @param insertedLines
    * @param sourceFilename
    */
-  private void checkSourceHasIngredient(List<String> insertedLines, String sourceFilename) {
+  public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilename) {
+    List<String> lines = new ArrayList<String>();
+    Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilename);
+    try {
+      lines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     for (String insertedLine : insertedLines) {
-      // if source has insertedLine
-      // hasIngredientInsertedLines.add(insertedLine);
-      System.out.println(insertedLine);
+      if (lines.contains(insertedLine)) {
+        hasIngredientInsertedLines.add(insertedLine);
+      }
     }
   }
 

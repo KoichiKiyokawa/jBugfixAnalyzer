@@ -2,30 +2,17 @@ package edu.koichi.packs.entities;
 
 import java.io.File;
 
+import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.utilities.RunCommand;
-import junit.framework.TestCase;
 
-public class RepositoryTest extends TestCase {
-  private final String testRepoDir = "../jBugfixAnalyzer-test";
-  private Repository repo;
+public class RepositoryTest extends UseTestRepo {
   private int initialCommitLength;
-  private final String testRepoURL = "https://github.com/KoichiKiyokawa/jBugfixAnalyzer-test.git";
 
   public RepositoryTest() {
     super();
-    initTestRepo();
-    String res = RunCommand.run("git log --oneline", testRepoDir); // count line
-    this.repo = new Repository(testRepoDir);
+    String res = RunCommand.run("git log --oneline", this.testRepoDir); // count line
+    repo = new Repository(this.testRepoDir);
     this.initialCommitLength = res.split("\n").length;
-  }
-
-  private void initTestRepo() {
-    File testRepo = new File(testRepoDir);
-    if (testRepo.exists()) {
-      RunCommand.run("git reset --hard origin/master", testRepoDir);
-    } else {
-      RunCommand.run(String.format("git clone %s", testRepoURL), "../");
-    }
   }
 
   public void testCommitLength() {

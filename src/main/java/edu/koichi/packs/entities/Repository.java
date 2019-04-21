@@ -7,7 +7,7 @@ import java.util.List;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
-  private String relativeRepositoryPath;
+  public String relativeRepositoryPath;
   public List<Commit> commits = new ArrayList<Commit>();
 
   public Repository(String relativeFilePath) {
