@@ -70,7 +70,8 @@ public class VerifyRedundancy {
   }
 
   private void showResult() {
-    System.out.println("BugfixCommitCount : " + bugfixCommitCount);
-    System.out.println("BugfixInsertedLineCount : " + insertedBugfixLineCount);
+    System.out.println("BugfixCommitCount / AllCommitCount : " + bugfixCommitCount + " / " + repo.commits.size());
+    System.out.println("BugfixInsertedLineCount / hasIngredientInsertedLines : " + insertedBugfixLineCount + "/"
+        + hasIngredientInsertedLines.size());
   }
 }
