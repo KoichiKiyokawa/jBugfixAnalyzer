@@ -36,7 +36,7 @@ public class VerifyRedundancy {
       this.bugfixCommitCount++;
 
       repo.checkout(commits.get(i + 1));
-      for (String sourceFilenameWithRelativePath : repo.getSourceFilenameWithRelativePaths()) {
+      for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
         checkSourceHasIngredient(insertedLines, sourceFilenameWithRelativePath);
       }
     }
@@ -51,15 +51,17 @@ public class VerifyRedundancy {
    * @param sourceFilenameWithRelativePath
    */
   public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilenameWithRelativePath) {
-    List<String> lines = new ArrayList<String>();
+    List<String> linesFromSourceFile = new ArrayList<String>();
     Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
-      lines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
+      linesFromSourceFile = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {
       e.printStackTrace();
     }
     for (String insertedLine : insertedLines) {
-      if (lines.contains(insertedLine)) {
+      List<String> unindentedLinesFromSourceFile = new ArrayList<String>();
+      linesFromSourceFile.forEach(l -> unindentedLinesFromSourceFile.add(l.trim()));
+      if (unindentedLinesFromSourceFile.contains(insertedLine)) {
         hasIngredientInsertedLines.add(insertedLine);
       }
     }
