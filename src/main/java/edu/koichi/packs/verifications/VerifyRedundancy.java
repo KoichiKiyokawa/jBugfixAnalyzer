@@ -20,8 +20,11 @@ public class VerifyRedundancy {
   private int insertedBugfixLineCount = 0;
   protected List<String> hasIngredientInsertedLines = new ArrayList<String>();
 
-  protected void verify(String repoPath) {
-    this.repo = new Repository(repoPath);
+  public VerifyRedundancy(Repository repo) {
+    this.repo = repo;
+  }
+
+  protected void verify() {
     List<Commit> commits = repo.commits;
     for (int i = 0; i < commits.size(); i++) {
       Commit c = commits.get(i);
@@ -33,8 +36,8 @@ public class VerifyRedundancy {
       this.bugfixCommitCount++;
 
       repo.checkout(commits.get(i + 1));
-      for (String sourceFilename : repo.getSourceFilenames()) {
-        checkSourceHasIngredient(insertedLines, sourceFilename);
+      for (String sourceFilenameWithRelativePath : repo.getSourceFilenameWithRelativePaths()) {
+        checkSourceHasIngredient(insertedLines, sourceFilenameWithRelativePath);
       }
     }
 
@@ -45,11 +48,11 @@ public class VerifyRedundancy {
    * 指定された挿入行が、同じく指定されたソースに存在していれば、配列に格納
    *
    * @param insertedLines
-   * @param sourceFilename
+   * @param sourceFilenameWithRelativePath
    */
-  public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilename) {
+  public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilenameWithRelativePath) {
     List<String> lines = new ArrayList<String>();
-    Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilename);
+    Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
       lines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {

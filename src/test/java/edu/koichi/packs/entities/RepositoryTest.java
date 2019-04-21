@@ -29,14 +29,14 @@ public class RepositoryTest extends UseTestRepo {
   }
 
   public void testGetSourceFiles() {
-    String[] files = repo.getSourceFilenames();
+    String[] files = repo.getSourceFilenameWithRelativePaths();
     assertEquals(files.length, 10);
   }
 
   public void testCheckoutAndSourceFilesCOunt() {
     Commit secondCommit = repo.commits.get(1);
     repo.checkout(secondCommit);
-    String[] files = repo.getSourceFilenames();
+    String[] files = repo.getSourceFilenameWithRelativePaths();
     assertEquals(files.length, 9);
     RunCommand.run("git checkout master", testRepoDir);
   }
