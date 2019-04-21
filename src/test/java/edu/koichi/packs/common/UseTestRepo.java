@@ -25,4 +25,8 @@ public class UseTestRepo extends TestCase {
       RunCommand.run(String.format("git clone %s", testRepoURL), "../");
     }
   }
+
+  protected void checkoutMaster() {
+    RunCommand.run("git checkout master", testRepoDir);
+  }
 }
