@@ -24,7 +24,7 @@ public class VerifyRedundancy {
     this.repo = repo;
   }
 
-  protected void verify() {
+  public void verify() {
     List<Commit> commits = repo.commits;
     for (int i = 0; i < commits.size(); i++) {
       Commit c = commits.get(i);
