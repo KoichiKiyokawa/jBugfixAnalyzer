@@ -26,19 +26,11 @@ public class Commit {
   }
 
   public boolean isBugfixCommit() {
-    Configration conf = new Configration();
     List<String> messageWords = Arrays.asList(this.message.split(" "));
-    if (messageWords.contains("fix") || messageWords.contains("Fix") || messageWords.contains("fixes")
-        || messageWords.contains("Fixes")) {
-      for (String exWord : conf.exceptionOfFixWords) {
-        if (this.message.contains(exWord)) {
-          return false;
-        }
-        if (this.message.contains(Lang.toggleCapital(exWord))) {
-          return false;
-        }
-      }
-      return true;
+    String[] fixWords = { "fix", "Fix", "fixes", "Fixes" };
+    for (String fixWord : fixWords) {
+      if (messageWords.contains(fixWord))
+        return true;
     }
     return false;
   }
