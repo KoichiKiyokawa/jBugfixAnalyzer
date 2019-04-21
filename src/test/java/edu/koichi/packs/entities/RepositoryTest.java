@@ -1,7 +1,5 @@
 package edu.koichi.packs.entities;
 
-import java.io.File;
-
 import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.utilities.RunCommand;
 

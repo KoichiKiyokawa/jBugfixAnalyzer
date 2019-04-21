@@ -1,12 +1,8 @@
 package edu.koichi.packs.entities;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import edu.koichi.packs.entities.Diff;
 import edu.koichi.packs.utilities.Lang;
