@@ -57,7 +57,7 @@ public class Commit {
   private List<Diff> getDiffs() {
     // TODO: 拡張子を指定できるように ex) git show <sha> -- '*.java'
     // TODO: とりま、ハードコーディングしたが、プロパティから読み込んだ拡張子を使うように
-    String diffStr = RunCommand.run(String.format("git show %s -- '*.java'", this.sha), this.relativeRepositoryPath);
+    String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha), this.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
     List<Diff> diffs = new ArrayList<>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));

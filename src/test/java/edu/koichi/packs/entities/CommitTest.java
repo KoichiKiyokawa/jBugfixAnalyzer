@@ -2,9 +2,9 @@ package edu.koichi.packs.entities;
 
 import java.util.Properties;
 
-import junit.framework.TestCase;
+import edu.koichi.packs.common.UseTestRepo;
 
-public class CommitTest extends TestCase {
+public class CommitTest extends UseTestRepo {
   public void testIsBugfixCommit() throws Exception {
     Commit commit = new Commit("hogehoge", "fix typo", "./");
     assertEquals(commit.isBugfixCommit(), true);
@@ -23,8 +23,10 @@ public class CommitTest extends TestCase {
     assertEquals(commit.isBugfixCommit(), false);
   }
 
-  // public void testSeparation() throws Exception {
-  //   Commit commit = new Commit("7436699b7be310865dd355e0d2f8bba850486c5f", "Initial commit", "./");
-  //   assertEquals(commit.insertedLines.size(), 2);
-  // }
+  public void testSeparation() throws Exception {
+    this.repo = new Repository(testRepoDir);
+    Commit firstCommit = repo.commits.get(0);
+    assertEquals(firstCommit.message, "Fix Test10.java");
+    assertEquals(firstCommit.insertedLines.size(), 1);
+  }
 }
