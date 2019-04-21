@@ -22,6 +22,7 @@ public class VerifyRedundancy {
 
   public VerifyRedundancy(Repository repo) {
     this.repo = repo;
+    repo.init();
   }
 
   public void verify() {
@@ -42,6 +43,7 @@ public class VerifyRedundancy {
     }
 
     showResult();
+    repo.init();
   }
 
   /**

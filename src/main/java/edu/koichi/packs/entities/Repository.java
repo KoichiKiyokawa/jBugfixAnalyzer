@@ -17,6 +17,10 @@ public class Repository {
     }
   }
 
+  public void init() {
+    RunCommand.run("git checkout master", relativeRepositoryPath);
+  }
+
   public List<Commit> getCommits() {
     List<Commit> commits = new ArrayList<>();
     String logStr = RunCommand.run("git log --oneline", this.relativeRepositoryPath);
