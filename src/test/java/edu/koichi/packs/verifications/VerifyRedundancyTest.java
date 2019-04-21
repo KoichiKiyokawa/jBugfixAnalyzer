@@ -13,12 +13,12 @@ import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.entities.Repository;
 
 public class VerifyRedundancyTest extends UseTestRepo {
-  private final String sourceFilename = "src/Test1.java";
+  private final String sourceFilenameWithRelativePath = "src/Test1.java";
+  private Repository repo = new Repository(testRepoDir);
+  private Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
 
   public void testFileRead() {
-    this.repo = new Repository(testRepoDir);
     List<String> lines = new ArrayList<String>();
-    Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilename);
     try {
       lines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {
@@ -26,12 +26,13 @@ public class VerifyRedundancyTest extends UseTestRepo {
     }
 
     assertEquals(lines.size(), 5);
+    assertEquals(lines.get(0), "public class Test1 {");
   }
 
-  // public void testCheckSourceHasIngredient() {
-  //   VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
-  //   List<String> insertions = Arrays.asList("public class Test1 {");
-  //   vRedundancy.checkSourceHasIngredient(insertions, sourceFilename.toString());
-  //   assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
-  // }
+  public void testCheckSourceHasIngredient() {
+    VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
+    List<String> insertions = Arrays.asList("public class Test1 {");
+    vRedundancy.checkSourceHasIngredient(insertions, sourceFilePath.toString());
+    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
+  }
 }
