@@ -35,4 +35,14 @@ public class VerifyRedundancyTest extends UseTestRepo {
     vRedundancy.checkSourceHasIngredient(insertions, sourceFilePath.toString());
     assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
   }
+
+  public void testIsBugfixCommit() {
+    assertEquals(repo.commits.get(0).isBugfixCommit(), true);
+  }
+
+  public void testVerify() {
+    VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
+    vRedundancy.verify();
+    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
+  }
 }
