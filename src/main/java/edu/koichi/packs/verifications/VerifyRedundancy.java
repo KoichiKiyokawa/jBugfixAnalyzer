@@ -53,26 +53,30 @@ public class VerifyRedundancy {
    * @param sourceFilenameWithRelativePath
    */
   public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilenameWithRelativePath) {
-    List<String> linesFromSourceFile = new ArrayList<String>();
+    List<String> sourceFileLines = new ArrayList<String>();
     Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
-      linesFromSourceFile = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
+      sourceFileLines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {
       e.printStackTrace();
     }
     for (String insertedLine : insertedLines) {
-      List<String> unindentedLinesFromSourceFile = new ArrayList<String>();
-      linesFromSourceFile.forEach(l -> unindentedLinesFromSourceFile.add(l.trim()));
-      if (unindentedLinesFromSourceFile.contains(insertedLine)) {
-        hasIngredientInsertedLines.add(insertedLine);
+      for (String srcline : sourceFileLines) {
+        if (isIngredient(srcline, insertedLine)) {
+          hasIngredientInsertedLines.add(insertedLine);
+        }
       }
     }
   }
 
+  private boolean isIngredient(String srcline, String insertedLine) {
+    return srcline.trim().equals(insertedLine);
+  }
+
   private void showResult() {
     System.out.println("BugfixCommitCount / AllCommitCount : " + bugfixCommitCount + " / " + repo.commits.size());
-    System.out.println("hasIngredientInsertedLines / BugfixInsertedLineCount : " + insertedBugfixLineCount + "/"
-        + hasIngredientInsertedLines.size());
+    System.out.println("hasIngredientInsertedLines / BugfixInsertedLineCount : " + hasIngredientInsertedLines.size()
+        + "/" + insertedBugfixLineCount);
     System.out.println(allInsertedLinesCount);
   }
 }
