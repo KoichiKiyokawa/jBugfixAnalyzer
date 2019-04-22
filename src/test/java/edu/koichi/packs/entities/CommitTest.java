@@ -30,4 +30,24 @@ public class CommitTest extends UseTestRepo {
     assertEquals(firstCommit.insertedLines.size(), 1);
     assertEquals(firstCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
   }
+
+  public void testAllInsertedLineCount() {
+    this.repo = new Repository(testRepoDir);
+    int allInsertedLineCount = 0;
+    for (Commit c : repo.commits) {
+      allInsertedLineCount += c.insertedLines.size();
+    }
+    assertEquals(allInsertedLineCount, 51);
+  }
+
+  public void testBugfixInsertedLineCount() {
+    this.repo = new Repository(testRepoDir);
+    int bugfixInsertedLineCount = 0;
+    for (Commit c : repo.commits) {
+      if (c.isBugfixCommit()) {
+        bugfixInsertedLineCount += c.insertedLines.size();
+      }
+    }
+    assertEquals(bugfixInsertedLineCount, 1);
+  }
 }
