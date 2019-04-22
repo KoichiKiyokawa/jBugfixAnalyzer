@@ -1,6 +1,10 @@
 package edu.koichi.packs.verifications;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,6 +47,7 @@ public class VerifyRedundancy {
     }
 
     showResult();
+    writeResult();
     repo.init();
   }
 
@@ -78,5 +83,28 @@ public class VerifyRedundancy {
     System.out.println("hasIngredientInsertedLines / BugfixInsertedLineCount : " + hasIngredientInsertedLines.size()
         + "/" + insertedBugfixLineCount);
     System.out.println(allInsertedLinesCount);
+  }
+
+  private void writeResult() {
+    try {
+      File resultDir = new File("result/");
+      if (!resultDir.exists()) {
+        resultDir.mkdir();
+      }
+      File file = new File("result/res.txt");
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+      FileWriter fw = new FileWriter(file);
+      PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+
+      for (String line : hasIngredientInsertedLines) {
+        pw.println(line);
+      }
+
+      pw.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
