@@ -53,3 +53,20 @@ system("
   git add src/Test10.java;
   git commit -m 'Fix Test10.java'
 ")
+
+# generate bugfix commit, existing ingredient in many places.
+edited_java_source2 = <<-EOS
+public class Test9 {
+  public static void main(String args[]) {
+    System.out.println("This is a test code9.");
+  }
+  public static void main(String args[]) {
+}
+EOS
+File.open("./src/Test9.java", "w") do |f|
+  f.puts(edited_java_source2)
+end
+system("
+  git add src/Test9.java;
+  git commit -m 'Fix Test9.java'
+")
