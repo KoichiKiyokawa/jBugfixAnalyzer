@@ -40,8 +40,12 @@ public class VerifyRedundancy {
         this.bugfixCommitCount++;
 
         repo.checkout(commits.get(i + 1));
+        System.out.println(String.format("-------%s-------------", c.message));
         for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
-          checkSourceHasIngredient(c.insertedLines, sourceFilenameWithRelativePath);
+          System.out.println(String.format("compare with %s", sourceFilenameWithRelativePath));
+          if (checkSourceHasIngredient(c.insertedLines, sourceFilenameWithRelativePath)) {
+            break;
+          }
         }
       }
     }
@@ -57,7 +61,7 @@ public class VerifyRedundancy {
    * @param insertedLines
    * @param sourceFilenameWithRelativePath
    */
-  public void checkSourceHasIngredient(List<String> insertedLines, String sourceFilenameWithRelativePath) {
+  public boolean checkSourceHasIngredient(List<String> insertedLines, String sourceFilenameWithRelativePath) {
     List<String> sourceFileLines = new ArrayList<String>();
     Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
@@ -68,10 +72,13 @@ public class VerifyRedundancy {
     for (String insertedLine : insertedLines) {
       for (String srcline : sourceFileLines) {
         if (isIngredient(srcline, insertedLine)) {
+          System.out.println(String.format("%s is equal to %s", srcline, insertedLine));
           hasIngredientInsertedLines.add(insertedLine);
+          return true;
         }
       }
     }
+    return false;
   }
 
   protected boolean isIngredient(String srcline, String insertedLine) {
