@@ -43,6 +43,8 @@ public class VerifyRedundancyTest extends UseTestRepo {
   public void testVerify() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     vRedundancy.verify();
-    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
+    // +    System.out.println("This is a test code10.");
+    // +  public static void main(String args[]) {
+    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 2);
   }
 }

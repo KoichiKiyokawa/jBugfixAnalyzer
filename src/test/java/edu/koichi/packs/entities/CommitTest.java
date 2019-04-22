@@ -3,6 +3,7 @@ package edu.koichi.packs.entities;
 import java.util.Properties;
 
 import edu.koichi.packs.common.UseTestRepo;
+import edu.koichi.packs.utilities.RunCommand;
 
 public class CommitTest extends UseTestRepo {
   public void testIsBugfixCommit() throws Exception {
@@ -25,10 +26,10 @@ public class CommitTest extends UseTestRepo {
 
   public void testSeparation() throws Exception {
     this.repo = new Repository(testRepoDir);
-    Commit firstCommit = repo.commits.get(0);
-    assertEquals(firstCommit.message, "Fix Test10.java");
-    assertEquals(firstCommit.insertedLines.size(), 1);
-    assertEquals(firstCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
+    Commit secondCommit = repo.commits.get(1);
+    assertEquals(secondCommit.message, "Fix Test10.java");
+    assertEquals(secondCommit.insertedLines.size(), 1);
+    assertEquals(secondCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
   }
 
   public void testAllInsertedLineCount() {
@@ -37,7 +38,21 @@ public class CommitTest extends UseTestRepo {
     for (Commit c : repo.commits) {
       allInsertedLineCount += c.insertedLines.size();
     }
-    assertEquals(allInsertedLineCount, 51);
+
+    assertEquals(allInsertedLineCount, calcAllInsertedLineCountFromGitLog());
+  }
+
+  private int calcAllInsertedLineCountFromGitLog() {
+    int allInsertedLineCountFromGitLog = 0;
+    String[] gitLogs = RunCommand.run("git log --numstat --pretty=format: -- *.java", testRepoDir).split("\n");
+    for (String gl : gitLogs) {
+      // ex)1 0 src/Test9.java
+      // TODO: 10行以上の追加に対応できない。。。
+      if (!gl.isEmpty()) {
+        allInsertedLineCountFromGitLog += Integer.parseInt(gl.substring(0, 1).trim());
+      }
+    }
+    return allInsertedLineCountFromGitLog;
   }
 
   public void testBugfixInsertedLineCount() {
@@ -48,6 +63,9 @@ public class CommitTest extends UseTestRepo {
         bugfixInsertedLineCount += c.insertedLines.size();
       }
     }
-    assertEquals(bugfixInsertedLineCount, 1);
+
+    // + System.out.println("This is a test code10.");
+    // + public static void main(String args[]) {
+    assertEquals(bugfixInsertedLineCount, 2);
   }
 }

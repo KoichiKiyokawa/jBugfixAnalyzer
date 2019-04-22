@@ -20,7 +20,8 @@ public class RepositoryTest extends UseTestRepo {
   public void testCheckout() {
     Commit secondCommit = repo.commits.get(1);
     repo.checkout(secondCommit);
-    assertEquals(secondCommit.message, "Add Test10.java");
+    String headCommitMessage = RunCommand.run("git log --oneline -1 --pretty=format:%s", testRepoDir).trim();
+    assertEquals(secondCommit.message, headCommitMessage);
     Repository repo2 = new Repository(testRepoDir);
     assertEquals(repo2.commits.size(), initialCommitLength - 1);
     checkoutMaster();
