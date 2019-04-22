@@ -16,6 +16,7 @@ import edu.koichi.packs.entities.Repository;
  */
 public class VerifyRedundancy {
   private Repository repo;
+  private int allInsertedLinesCount = 0;
   private int bugfixCommitCount = 0;
   private int insertedBugfixLineCount = 0;
   protected List<String> hasIngredientInsertedLines = new ArrayList<String>();
@@ -29,6 +30,7 @@ public class VerifyRedundancy {
     List<Commit> commits = repo.commits;
     for (int i = 0; i < commits.size(); i++) {
       Commit c = commits.get(i);
+      allInsertedLinesCount += c.insertedLines.size();
       if (!c.isBugfixCommit())
         continue;
 
@@ -71,7 +73,8 @@ public class VerifyRedundancy {
 
   private void showResult() {
     System.out.println("BugfixCommitCount / AllCommitCount : " + bugfixCommitCount + " / " + repo.commits.size());
-    System.out.println("BugfixInsertedLineCount / hasIngredientInsertedLines : " + insertedBugfixLineCount + "/"
+    System.out.println("hasIngredientInsertedLines / BugfixInsertedLineCount : " + insertedBugfixLineCount + "/"
         + hasIngredientInsertedLines.size());
+    System.out.println(allInsertedLinesCount);
   }
 }
