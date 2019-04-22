@@ -69,7 +69,7 @@ public class VerifyRedundancy {
     }
   }
 
-  private boolean isIngredient(String srcline, String insertedLine) {
+  protected boolean isIngredient(String srcline, String insertedLine) {
     return srcline.trim().equals(insertedLine);
   }
 
