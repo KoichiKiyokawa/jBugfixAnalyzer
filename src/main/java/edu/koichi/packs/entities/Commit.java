@@ -27,7 +27,7 @@ public class Commit {
 
   public boolean isBugfixCommit() {
     List<String> messageWords = Arrays.asList(this.message.split(" "));
-    String[] fixWords = { "fix", "fixes" };
+    final String[] fixWords = { "fix", "fixes", "fixed" };
     for (String fixWord : fixWords) {
       if (messageWords.contains(fixWord) || messageWords.contains(Lang.toggleCapital(fixWord)))
         return true;
