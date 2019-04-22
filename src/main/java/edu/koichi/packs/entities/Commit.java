@@ -27,9 +27,9 @@ public class Commit {
 
   public boolean isBugfixCommit() {
     List<String> messageWords = Arrays.asList(this.message.split(" "));
-    String[] fixWords = { "fix", "Fix", "fixes", "Fixes" };
+    String[] fixWords = { "fix", "fixes" };
     for (String fixWord : fixWords) {
-      if (messageWords.contains(fixWord))
+      if (messageWords.contains(fixWord) || messageWords.contains(Lang.toggleCapital(fixWord)))
         return true;
     }
     return false;
@@ -49,7 +49,7 @@ public class Commit {
   }
 
   private List<Diff> getDiffs() {
-    // TODO: 拡張子を指定できるように ex) git show <sha> -- '*.java'
+    // TODO: 拡張子を指定できるように ex) git show <sha> -- *.java
     // TODO: とりま、ハードコーディングしたが、プロパティから読み込んだ拡張子を使うように
     String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha), this.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
