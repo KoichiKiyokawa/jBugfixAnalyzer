@@ -23,9 +23,9 @@ public class Repository {
 
   public List<Commit> getCommits() {
     List<Commit> commits = new ArrayList<Commit>();
-    String logStr = RunCommand.run("git log --oneline", this.relativeRepositoryPath);
+    String logStr = RunCommand.run("git log --oneline --pretty=format:%h,%s", this.relativeRepositoryPath);
     Arrays.stream(logStr.split("\n")).forEach(log -> {
-      String[] splitedLog = log.split(" ", 2);
+      String[] splitedLog = log.split(",");
       String sha = splitedLog[0];
       String msg = splitedLog[1];
       commits.add(new Commit(sha, msg, this.relativeRepositoryPath));
