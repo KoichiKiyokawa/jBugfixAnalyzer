@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 
 public class UseTestRepo extends TestCase {
   protected final String testRepoDir = "../jBugfixAnalyzer-test";
-  protected final String testRepoURL = "https://github.com/KoichiKiyokawa/jBugfixAnalyzer-test.git";
 
   protected Repository repo;
 
@@ -19,11 +18,11 @@ public class UseTestRepo extends TestCase {
 
   private void initTestRepo() {
     File testRepo = new File(testRepoDir);
-    if (testRepo.exists()) {
-      RunCommand.run("git reset --hard origin/master", testRepoDir);
-    } else {
-      RunCommand.run(String.format("git clone %s", testRepoURL), "../");
+    if (!testRepo.exists()) {
+      testRepo.mkdir();
     }
+    RunCommand.run(String.format("cp test-repo-initializer/init.rb %s", testRepoDir), "./");
+    RunCommand.run("ruby init.rb", testRepoDir);
   }
 
   protected void checkoutMaster() {

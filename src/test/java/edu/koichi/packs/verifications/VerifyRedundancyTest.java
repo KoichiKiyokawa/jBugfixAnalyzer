@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.koichi.packs.common.UseTestRepo;
+import edu.koichi.packs.entities.Commit;
 import edu.koichi.packs.entities.Repository;
 
 public class VerifyRedundancyTest extends UseTestRepo {
@@ -31,9 +32,11 @@ public class VerifyRedundancyTest extends UseTestRepo {
 
   public void testCheckSourceHasIngredient() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
-    List<String> insertions = Arrays.asList("public class Test1 {");
-    vRedundancy.checkSourceHasIngredient(insertions, sourceFilePath.toString());
-    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 1);
+    Commit commit = new Commit("shasha", "Hoge", testRepoDir);
+    commit.insertedLines.add("public class Test1 {");
+    commit.insertedLines.add("public static void main(String[] args) {");
+    vRedundancy.isCommitHasIngredientInSource(commit, sourceFilePath.toString());
+    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 2);
   }
 
   public void testIsBugfixCommit() {
@@ -43,8 +46,8 @@ public class VerifyRedundancyTest extends UseTestRepo {
   public void testVerify() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     vRedundancy.verify();
-    // +    System.out.println("This is a test code10.");
-    // +  public static void main(String args[]) {
+    // + System.out.println("This is a test code10.");
+    // + public static void main(String[] args) {
     assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 2);
   }
 }
