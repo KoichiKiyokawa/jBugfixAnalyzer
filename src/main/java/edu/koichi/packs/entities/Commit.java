@@ -15,8 +15,8 @@ public class Commit {
   private String relativeRepositoryPath;
   public String sha;
   public String message;
-  public List<String> insertedLines = new ArrayList<>();
-  public List<String> deletedLines = new ArrayList<>();
+  public List<String> insertedLines = new ArrayList<String>();
+  public List<String> deletedLines = new ArrayList<String>();
 
   public Commit(String sha, String message, String relativeRepositoryPath) {
     this.sha = sha;
@@ -53,7 +53,7 @@ public class Commit {
     // TODO: とりま、ハードコーディングしたが、プロパティから読み込んだ拡張子を使うように
     String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha), this.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
-    List<Diff> diffs = new ArrayList<>();
+    List<Diff> diffs = new ArrayList<Diff>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));
     return diffs;
   }
