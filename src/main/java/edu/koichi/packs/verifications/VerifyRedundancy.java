@@ -34,13 +34,12 @@ public class VerifyRedundancy {
       if (!c.isBugfixCommit())
         continue;
 
-      List<String> insertedLines = c.insertedLines;
-      this.insertedBugfixLineCount += insertedLines.size();
+      this.insertedBugfixLineCount += c.insertedLines.size();
       this.bugfixCommitCount++;
 
       repo.checkout(commits.get(i + 1));
       for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
-        checkSourceHasIngredient(insertedLines, sourceFilenameWithRelativePath);
+        checkSourceHasIngredient(c.insertedLines, sourceFilenameWithRelativePath);
       }
     }
 
