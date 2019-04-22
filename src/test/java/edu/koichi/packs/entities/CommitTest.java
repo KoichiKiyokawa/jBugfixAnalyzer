@@ -65,7 +65,7 @@ public class CommitTest extends UseTestRepo {
     }
 
     // + System.out.println("This is a test code10.");
-    // + public static void main(String args[]) {
+    // + public static void main(String[] args) {
     assertEquals(bugfixInsertedLineCount, 2);
   }
 }

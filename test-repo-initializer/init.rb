@@ -21,7 +21,7 @@ system "mkdir src"
 (1..10).each do |i|
   java_source = <<-EOS
 public class Test#{i} {
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     System.out.println("This is a test code#{i}.");
   }
 }
@@ -40,7 +40,7 @@ end
 # generate bugfix commit
 edited_java_source = <<-EOS
 public class Test10 {
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     System.out.println("This is a test code10.");
     System.out.println("This is a test code10.");
   }
@@ -57,10 +57,10 @@ system("
 # generate bugfix commit, existing ingredient in many places.
 edited_java_source2 = <<-EOS
 public class Test9 {
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     System.out.println("This is a test code9.");
   }
-  public static void main(String args[]) {
+  public static void main(String[] args) {
 }
 EOS
 File.open("./src/Test9.java", "w") do |f|
