@@ -30,16 +30,15 @@ public class VerifyRedundancy {
     List<Commit> commits = repo.commits;
     for (int i = 0; i < commits.size(); i++) {
       Commit c = commits.get(i);
-      allInsertedLinesCount += c.insertedLines.size();
-      if (!c.isBugfixCommit())
-        continue;
+      this.allInsertedLinesCount += c.insertedLines.size();
+      if (c.isBugfixCommit()) {
+        this.insertedBugfixLineCount += c.insertedLines.size();
+        this.bugfixCommitCount++;
 
-      this.insertedBugfixLineCount += c.insertedLines.size();
-      this.bugfixCommitCount++;
-
-      repo.checkout(commits.get(i + 1));
-      for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
-        checkSourceHasIngredient(c.insertedLines, sourceFilenameWithRelativePath);
+        repo.checkout(commits.get(i + 1));
+        for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
+          checkSourceHasIngredient(c.insertedLines, sourceFilenameWithRelativePath);
+        }
       }
     }
 
