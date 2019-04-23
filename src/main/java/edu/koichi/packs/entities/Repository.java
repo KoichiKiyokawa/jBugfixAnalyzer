@@ -7,11 +7,11 @@ import java.util.List;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
-  public String relativeRepositoryPath;
+  public static String relativeRepositoryPath;
   public List<Commit> commits = new ArrayList<Commit>();
 
   public Repository(String relativeFilePath) {
-    this.relativeRepositoryPath = relativeFilePath;
+    Repository.relativeRepositoryPath = relativeFilePath;
     for (Commit c : getCommits()) {
       commits.add(c);
     }
@@ -23,23 +23,23 @@ public class Repository {
 
   public List<Commit> getCommits() {
     List<Commit> commits = new ArrayList<Commit>();
-    String logStr = RunCommand.run("git log --oneline --pretty=format:%h,%s", this.relativeRepositoryPath);
+    String logStr = RunCommand.run("git log --oneline --pretty=format:%h,%s", Repository.relativeRepositoryPath);
     Arrays.stream(logStr.split("\n")).forEach(log -> {
       String[] splitedLog = log.split(",");
       String sha = splitedLog[0];
       String msg = splitedLog[1];
-      commits.add(new Commit(sha, msg, this.relativeRepositoryPath));
+      commits.add(new Commit(sha, msg, Repository.relativeRepositoryPath));
     });
     return commits;
   }
 
   public void checkout(Commit commit) {
-    RunCommand.run(String.format("git checkout %s", commit.sha), relativeRepositoryPath);
+    RunCommand.run(String.format("git checkout %s", commit.sha), Repository.relativeRepositoryPath);
   }
 
   public String[] getSourceFilenamesWithRelativePath() {
     // TODO: ハードコーディングで拡張子を指定しているがプロパティから読み込めるようにする
-    String filenames = RunCommand.run("git ls-files *.java", relativeRepositoryPath);
+    String filenames = RunCommand.run("git ls-files *.java", Repository.relativeRepositoryPath);
     return filenames.split("\n");
   }
 }
