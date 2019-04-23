@@ -12,23 +12,21 @@ public class CodeLine {
 
   /**
    *
-   * @param file   どのファイル
-   * @param lineNo 何行目
-   * @param line   実際の文字列
+   * @param relativeSourcePath 対象のリポジトリから、そのファイルまでの相対パス
+   * @param lineNo             何行目
+   * @param line               実際の文字列
    */
-  public CodeLine(File file, int lineNo, String line, String relativeSourcePath) {
-    this.filePathFromThisAppRoot = file;
+  public CodeLine(String relativeSourcePath, int lineNo, String line) {
+    this.relativeSourcePath = relativeSourcePath;
     this.lineNo = lineNo;
     this.line = line;
-    this.relativeSourcePath = relativeSourcePath;
   }
 
   public String getCommitMessage() {
-    String repoDir = filePathFromThisAppRoot.toPath().toString().replace(relativeSourcePath, "");
     String blameLine = RunCommand.run(String.format("git blame -L %d,%d %s", lineNo, lineNo, relativeSourcePath),
-        repoDir);
+        Repository.relativeRepositoryPath);
     String sha = blameLine.substring(0, 8);
-    String msg = RunCommand.run("git log " + sha + " -1 --pretty=format:%s", repoDir);
+    String msg = RunCommand.run("git log " + sha + " -1 --pretty=format:%s", Repository.relativeRepositoryPath);
     return msg.trim();
   }
 
@@ -47,5 +45,4 @@ public class CodeLine {
   private boolean isOnlyBracket() {
     return (line.equals("}") && line.length() == 1);
   }
-
 }
