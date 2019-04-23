@@ -28,7 +28,7 @@ public class Repository {
       String[] splitedLog = log.split(",");
       String sha = splitedLog[0];
       String msg = splitedLog[1];
-      commits.add(new Commit(sha, msg, Repository.relativeRepositoryPath));
+      commits.add(new Commit(sha, msg));
     });
     return commits;
   }

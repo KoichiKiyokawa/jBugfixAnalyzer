@@ -32,7 +32,7 @@ public class VerifyRedundancyTest extends UseTestRepo {
 
   public void testCheckSourceHasIngredient() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
-    Commit commit = new Commit("shasha", "Hoge", testRepoDir);
+    Commit commit = new Commit("shasha", "Hoge");
     commit.insertedLines.add("public class Test1 {");
     commit.insertedLines.add("public static void main(String[] args) {");
     vRedundancy.isCommitHasIngredientInSource(commit, sourceFilePath.toString());

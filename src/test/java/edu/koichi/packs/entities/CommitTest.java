@@ -7,12 +7,12 @@ import edu.koichi.packs.utilities.RunCommand;
 
 public class CommitTest extends UseTestRepo {
   public void testIsBugfixCommit() throws Exception {
-    Commit commit = new Commit("hogehoge", "fix typo", "./");
+    Commit commit = new Commit("hogehoge", "fix typo");
     assertEquals(commit.isBugfixCommit(), true);
   }
 
   public void testIsNotBugfixCommit() throws Exception {
-    Commit commit = new Commit("foofoo", "Add func", "./");
+    Commit commit = new Commit("foofoo", "Add func");
     assertEquals(commit.isBugfixCommit(), false);
   }
 
@@ -20,7 +20,7 @@ public class CommitTest extends UseTestRepo {
     Properties properties = new Properties();
     properties.setProperty("exception_of_fix_message", "fixnum");
 
-    Commit commit = new Commit("barbar", "Add Fixnum function", "./");
+    Commit commit = new Commit("barbar", "Add Fixnum function");
     assertEquals(commit.isBugfixCommit(), false);
   }
 
