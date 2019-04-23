@@ -5,7 +5,7 @@ import java.io.File;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class CodeLine {
-  public File file;
+  public File filePathFromThisAppRoot;
   public int lineNo;
   public String line;
   private String relativeSourcePath; // 分析対象のリポジトリでの相対位置
@@ -17,14 +17,14 @@ public class CodeLine {
    * @param line   実際の文字列
    */
   public CodeLine(File file, int lineNo, String line, String relativeSourcePath) {
-    this.file = file;
+    this.filePathFromThisAppRoot = file;
     this.lineNo = lineNo;
     this.line = line;
     this.relativeSourcePath = relativeSourcePath;
   }
 
   public String getCommitMessage() {
-    String repoDir = file.toPath().toString().replace(relativeSourcePath, "");
+    String repoDir = filePathFromThisAppRoot.toPath().toString().replace(relativeSourcePath, "");
     String blameLine = RunCommand.run(String.format("git blame -L %d,%d %s", lineNo, lineNo, relativeSourcePath),
         repoDir);
     String sha = blameLine.substring(0, 8);
