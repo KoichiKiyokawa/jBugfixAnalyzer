@@ -6,10 +6,18 @@ package edu.koichi.packs.entities;
  * ex2) + hoge.fuga();
  */
 public class Diff {
+  public String filePath;
   public String diffLine;
+  public int lineNo;
 
   public Diff(String diffLine) {
     this.diffLine = diffLine;
+  }
+
+  public Diff(String filePath, String diffLine, int lineNo) {
+    this.filePath = filePath;
+    this.diffLine = diffLine;
+    this.lineNo = lineNo;
   }
 
   public boolean isInsertedLine() {
@@ -48,4 +56,8 @@ public class Diff {
   public String toCode() {
     return this.diffLine.substring(1).trim();
   }
+
+  // public CodeLine toCodeLine() {
+  // return new CodeLine(filePath, lineNo, toCode(), relativeSourcePath);
+  // }
 }
