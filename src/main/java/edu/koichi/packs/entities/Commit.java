@@ -38,6 +38,7 @@ public class Commit {
   /**
    * 差分を挿入行と削除行に振り分ける
    */
+  // TOOD: コメントは除外
   private void separateDiffsIntoInsertAndDelete() {
     for (Diff diff : this.getDiffs()) {
       if (diff.isInsertedLine()) {

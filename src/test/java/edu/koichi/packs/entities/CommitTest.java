@@ -47,6 +47,7 @@ public class CommitTest extends UseTestRepo {
     String[] gitLogs = RunCommand.run("git log --numstat --pretty=format: -- *.java", testRepoDir).split("\n");
     for (String gl : gitLogs) {
       // ex)1 0 src/Test9.java
+      // 挿入行 削除行 ファイル名
       // TODO: 10行以上の追加に対応できない。。。
       if (!gl.isEmpty()) {
         allInsertedLineCountFromGitLog += Integer.parseInt(gl.substring(0, 1).trim());
