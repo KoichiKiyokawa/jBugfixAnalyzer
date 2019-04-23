@@ -8,7 +8,6 @@ import junit.framework.TestCase;
 
 public class UseTestRepo extends TestCase {
   protected final String testRepoDir = "../jBugfixAnalyzer-test";
-
   protected Repository repo;
 
   public UseTestRepo() {
@@ -21,8 +20,12 @@ public class UseTestRepo extends TestCase {
     if (!testRepo.exists()) {
       testRepo.mkdir();
     }
-    RunCommand.run(String.format("cp test-repo-initializer/init.rb %s", testRepoDir), "./");
-    RunCommand.run("ruby init.rb", testRepoDir);
+    // TODO: git clone なしでレポジトリが作れたほうが良い？
+    // RunCommand.run(String.format("cp test-repo-initializer/init.rb %s",
+    // testRepoDir), "./");
+    // RunCommand.run("ruby init.rb", testRepoDir);
+    RunCommand.run("git remote add origin git@github.com:KoichiKiyokawa/jBugfixAnalyzer-test.git", testRepoDir);
+    RunCommand.run("git reset --hard origin/master", testRepoDir);
   }
 
   protected void checkoutMaster() {
