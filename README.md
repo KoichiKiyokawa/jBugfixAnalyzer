@@ -6,6 +6,8 @@
 
 - Maven
 - Java 1.8.\*
+- Git
+- Ruby (to generate test repository)
 
 # How to start
 
@@ -16,4 +18,4 @@ mvn compile
 java -cp target/classes edu.koichi.Main <path to directory you want to analyze>
 ```
 
-You can analyze this repository's bugfix commit.
+You can analyze bugfix commit.
