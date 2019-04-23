@@ -40,9 +40,7 @@ public class VerifyRedundancy {
         this.bugfixCommitCount++;
 
         repo.checkout(commits.get(i + 1));
-        System.out.println(String.format("-------%s-------------", c.message));
         for (String sourceFilenameWithRelativePath : repo.getSourceFilenamesWithRelativePath()) {
-          System.out.println(String.format("compare with %s", sourceFilenameWithRelativePath));
           if (isCommitHasIngredientInSource(c, sourceFilenameWithRelativePath)) {
             break;
           }
