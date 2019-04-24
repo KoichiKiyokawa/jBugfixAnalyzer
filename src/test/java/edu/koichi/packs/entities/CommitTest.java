@@ -26,10 +26,10 @@ public class CommitTest extends UseTestRepo {
 
   public void testSeparation() throws Exception {
     this.repo = new Repository(testRepoDir);
-    Commit secondCommit = repo.commits.get(1);
-    assertEquals(secondCommit.message, "Fix Test10.java");
-    assertEquals(secondCommit.insertedLines.size(), 1);
-    assertEquals(secondCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
+    Commit thirdCommit = repo.commits.get(2);
+    assertEquals(thirdCommit.message, "Fix Test10.java");
+    assertEquals(thirdCommit.insertedLines.size(), 1);
+    assertEquals(thirdCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
   }
 
   public void testAllInsertedLineCount() {
@@ -67,6 +67,6 @@ public class CommitTest extends UseTestRepo {
 
     // + System.out.println("This is a test code10.");
     // + public static void main(String[] args) {
-    assertEquals(bugfixInsertedLineCount, 2);
+    assertEquals(bugfixInsertedLineCount, 4);
   }
 }
