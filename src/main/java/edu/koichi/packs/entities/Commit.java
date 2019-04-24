@@ -16,11 +16,14 @@ public class Commit {
   public String message;
   public List<String> insertedLines = new ArrayList<String>();
   public List<String> deletedLines = new ArrayList<String>();
+  public List<CodeLine> insertedCodeLines = new ArrayList<CodeLine>();
+  public List<CodeLine> deletedCodeLines = new ArrayList<CodeLine>();
 
   public Commit(String sha, String message) {
     this.sha = sha;
     this.message = message;
     this.separateDiffsIntoInsertAndDelete();
+    this.separateGitShowIntoInsertAndDelete();
   }
 
   public boolean isBugfixCommit() {
@@ -50,10 +53,23 @@ public class Commit {
   private List<Diff> getDiffs() {
     // TODO: 拡張子を指定できるように ex) git show <sha> -- *.java
     // TODO: とりま、ハードコーディングしたが、プロパティから読み込んだ拡張子を使うように
-    String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha), Repository.relativeRepositoryPath);
+    String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha),
+        Repository.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
     List<Diff> diffs = new ArrayList<Diff>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));
     return diffs;
+  }
+
+  private void separateGitShowIntoInsertAndDelete() {
+    GitShow gShow = new GitShow(
+        RunCommand.run(String.format("git show %s", this.sha), Repository.relativeRepositoryPath));
+    for (Diff diff : gShow.diffs) {
+      if (diff.isInsertedLine()) {
+        this.insertedCodeLines.add(diff.toCodeLine());
+      } else if (diff.isDeletedLine()) {
+        this.deletedCodeLines.add(diff.toCodeLine());
+      }
+    }
   }
 }
