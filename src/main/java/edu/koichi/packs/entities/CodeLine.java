@@ -5,10 +5,9 @@ import java.io.File;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class CodeLine {
-  public File filePathFromThisAppRoot;
+  private String relativeSourcePath; // 分析対象のリポジトリでの相対位置
   public int lineNo;
   public String line;
-  private String relativeSourcePath; // 分析対象のリポジトリでの相対位置
 
   /**
    *
