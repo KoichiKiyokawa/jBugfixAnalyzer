@@ -5,6 +5,7 @@ import java.util.List;
 
 /* result of git show
 example)
+```
 commit f2279a7fe557e6109bfcbbd7e7b68076271cc2e6
 Author: K.Kiyokawa <koichi20110068@gmail.com>
 Date:   Mon Apr 22 22:33:08 2019 +0900
@@ -19,16 +20,19 @@ index 0000000..3881313
 @@ -0,0 +1,5 @@ (startCodeLine 1)
 +public class Test10 { (relativeCodeLine 0)
 +  public static void main(String[] args) { (relativeCodeLine 1)
+-    System.out.println("This is a test code10."); (relativeCodeLine 2) * 削除行のときはカウントを進めない。
 +    System.out.println("This is a test code10."); (relativeCodeLine 2)
 +  }
 +}
+```
+  startCodeLine + relativeCodeLineが実際のソースコードにおける行数になる
  */
 public class GitShow {
   private String filePath = "";
   private int startCodeLine = 0;
   private int relativeCodeLine = 0;
   private boolean isCode = false;
-  private List<Diff> diffs = new ArrayList<Diff>();
+  public List<Diff> diffs = new ArrayList<Diff>();
 
   public GitShow(String gitShow) {
     for (String gitShowLine : gitShow.split("\n")) {
@@ -44,6 +48,7 @@ public class GitShow {
         this.relativeCodeLine = 0;
       }
     }
+
     if (gitShowLine.length() >= 6) {
       if (gitShowLine.substring(0, 6).equals("+++ b/")) {
         this.filePath = gitShowLine.substring(6); // length(+++ b/) = 6
@@ -54,12 +59,15 @@ public class GitShow {
       if (gitShowLine.substring(0, 2).equals("@@")) {
         setStartLineFromHunk(gitShowLine);
         this.isCode = true; // すぐ下からコードが書かれるのでtrueにする
+        return; // @@ -0,0 +1,5 @@ の行自体はコードではないのでreturn
       }
     }
 
     if (this.isCode) {
-      this.diffs.add(new Diff(this.filePath, gitShowLine, this.relativeCodeLine + this.startCodeLine));
-      this.relativeCodeLine++;
+      Diff diff = new Diff(this.filePath, gitShowLine, this.relativeCodeLine + this.startCodeLine);
+      this.diffs.add(diff);
+      if (!diff.isDeletedLine())
+        this.relativeCodeLine++;
     }
   }
 
