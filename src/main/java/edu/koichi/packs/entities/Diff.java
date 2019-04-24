@@ -57,7 +57,7 @@ public class Diff {
     return this.diffLine.substring(1).trim();
   }
 
-  // public CodeLine toCodeLine() {
-  // return new CodeLine(filePath, lineNo, toCode(), relativeSourcePath);
-  // }
+  public CodeLine toCodeLine() {
+    return new CodeLine(filePath, lineNo, toCode());
+  }
 }
