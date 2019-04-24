@@ -70,3 +70,21 @@ system("
   git add src/Test9.java;
   git commit -m 'Fix Test9.java'
 ")
+
+# generate bugfix commit, including two changed files.
+[8, 7].each do |i|
+  edited_java_source = <<-EOS
+public class Test#{i} {
+  public static void main(String[] args) {
+    System.out.println("This is a fixed test code#{i}.");
+  }
+}
+  EOS
+  File.open("./src/Test#{i}.java", "w") do |f|
+    f.puts(edited_java_source)
+  end
+end
+system("
+  git add src/*.java;
+  git commit -m 'Fix Test7 and Test8'
+")
