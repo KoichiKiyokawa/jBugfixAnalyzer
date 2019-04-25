@@ -14,30 +14,29 @@ public class RepositoryTest extends UseTestRepo {
   }
 
   public void testCommitLength() {
-    assertEquals(repo.commits.size(), initialCommitLength);
+    assertEquals(initialCommitLength, repo.commits.size());
   }
 
   public void testCheckout() {
     Commit secondCommit = repo.commits.get(1);
     repo.checkout(secondCommit);
-    // チェックアウト処理がうまくいっていない？
     String headCommitMessage = RunCommand.run("git log --oneline -1 HEAD --pretty=format:%s", testRepoDir).trim();
     assertEquals(secondCommit.message, headCommitMessage);
     Repository repo2 = new Repository(testRepoDir);
-    assertEquals(repo2.commits.size(), initialCommitLength - 1);
+    assertEquals(initialCommitLength - 1, repo2.commits.size());
     checkoutMaster();
   }
 
   public void testGetSourceFiles() {
     String[] files = repo.getSourceFilenamesWithRelativePath();
-    assertEquals(files.length, 10);
+    assertEquals(10, files.length);
   }
 
   public void testCheckoutAndSourceFilesCount() {
     Commit secondCommit = repo.commits.get(1);
     repo.checkout(secondCommit);
     String[] files = repo.getSourceFilenamesWithRelativePath();
-    assertEquals(files.length, 10);
+    assertEquals(10, files.length);
     checkoutMaster();
   }
 }

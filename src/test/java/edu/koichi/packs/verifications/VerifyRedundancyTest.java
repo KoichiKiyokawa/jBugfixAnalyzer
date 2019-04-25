@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import edu.koichi.packs.common.UseTestRepo;
@@ -16,7 +15,7 @@ import edu.koichi.packs.entities.Repository;
 public class VerifyRedundancyTest extends UseTestRepo {
   private final String sourceFilenameWithRelativePath = "src/Test1.java";
   private Repository repo = new Repository(testRepoDir);
-  private Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
+  private Path sourceFilePath = Paths.get(Repository.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
 
   public void testFileRead() {
     List<String> lines = new ArrayList<String>();
@@ -26,8 +25,8 @@ public class VerifyRedundancyTest extends UseTestRepo {
       e.printStackTrace();
     }
 
-    assertEquals(lines.size(), 5);
-    assertEquals(lines.get(0), "public class Test1 {");
+    assertEquals(5, lines.size());
+    assertEquals("public class Test1 {", lines.get(0));
   }
 
   public void testCheckSourceHasIngredient() {
@@ -36,11 +35,11 @@ public class VerifyRedundancyTest extends UseTestRepo {
     commit.insertedLines.add("public class Test1 {");
     commit.insertedLines.add("public static void main(String[] args) {");
     vRedundancy.isCommitHasIngredientInSource(commit, sourceFilePath.toString());
-    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 2);
+    assertEquals(2, vRedundancy.hasIngredientInsertedLines.size());
   }
 
   public void testIsBugfixCommit() {
-    assertEquals(repo.commits.get(0).isBugfixCommit(), true);
+    assertEquals(true, repo.commits.get(0).isBugfixCommit());
   }
 
   public void testVerify() {
@@ -48,6 +47,6 @@ public class VerifyRedundancyTest extends UseTestRepo {
     vRedundancy.verify();
     // + System.out.println("This is a test code10.");
     // + public static void main(String[] args) {
-    assertEquals(vRedundancy.hasIngredientInsertedLines.size(), 2);
+    assertEquals(2, vRedundancy.hasIngredientInsertedLines.size());
   }
 }

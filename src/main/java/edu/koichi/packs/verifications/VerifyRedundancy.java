@@ -62,7 +62,7 @@ public class VerifyRedundancy {
   public boolean isCommitHasIngredientInSource(Commit commit, String sourceFilenameWithRelativePath) {
     boolean hasIngredient = false;
     List<String> sourceFileLines = new ArrayList<String>();
-    Path sourceFilePath = Paths.get(repo.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
+    Path sourceFilePath = Paths.get(Repository.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
       sourceFileLines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {

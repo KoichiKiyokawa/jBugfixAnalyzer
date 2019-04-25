@@ -5,16 +5,16 @@ import junit.framework.TestCase;
 public class CodeLineTest extends TestCase {
   public void testShouldIgnore() {
     CodeLine cLine = new CodeLine("src/Test10.java", 5, "}");
-    assertEquals(cLine.shouldIgnore(), true);
+    assertEquals(true, cLine.shouldIgnore());
   }
 
   public void testShouldNotIgnore() {
     CodeLine cLine = new CodeLine("src/Test10.java", 3, "System.out.println(\"This is a test code10.\");");
-    assertEquals(cLine.shouldIgnore(), false);
+    assertEquals(false, cLine.shouldIgnore());
   }
 
   public void testGetCommitMessage() {
     CodeLine cLine = new CodeLine("src/Test10.java", 3, "System.out.println(\"This is a test code10.\");");
-    assertEquals(cLine.getCommitMessage(), "Add Test10.java");
+    assertEquals("Add Test10.java", cLine.getCommitMessage());
   }
 }

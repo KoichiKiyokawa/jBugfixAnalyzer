@@ -1,7 +1,5 @@
 package edu.koichi.packs.entities;
 
-import java.io.File;
-
 import edu.koichi.packs.utilities.RunCommand;
 
 public class CodeLine {

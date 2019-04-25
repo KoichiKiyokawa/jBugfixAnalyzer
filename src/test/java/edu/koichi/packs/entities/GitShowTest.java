@@ -6,7 +6,7 @@ import edu.koichi.packs.utilities.RunCommand;
 public class GitShowTest extends UseTestRepo {
   public void testDiffSize() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
-    assertEquals(gs.diffs.size(), 12);
+    assertEquals(12, gs.diffs.size());
   }
 
 /* result of git show
@@ -45,27 +45,27 @@ index 47589aa..0222e0d 100644
 
   public void testDiffFile() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
-    assertEquals(gs.diffs.get(0).toCode(), "public class Test7 {");
-    assertEquals(gs.diffs.get(1).toCode(), "public static void main(String[] args) {");
-    assertEquals(gs.diffs.get(2).toCode(), "System.out.println(\"This is a test code7.\");");
-    assertEquals(gs.diffs.get(3).toCode(), "System.out.println(\"This is a fixed test code7.\");");
-    assertEquals(gs.diffs.get(4).toCode(), "}");
-    assertEquals(gs.diffs.get(5).toCode(), "}");
-    assertEquals(gs.diffs.get(6).toCode(), "public class Test8 {");
+    assertEquals("public class Test7 {", gs.diffs.get(0).toCode());
+    assertEquals("public static void main(String[] args) {", gs.diffs.get(1).toCode());
+    assertEquals("System.out.println(\"This is a test code7.\");", gs.diffs.get(2).toCode());
+    assertEquals("System.out.println(\"This is a fixed test code7.\");", gs.diffs.get(3).toCode());
+    assertEquals("}", gs.diffs.get(4).toCode());
+    assertEquals("}", gs.diffs.get(5).toCode());
+    assertEquals("public class Test8 {", gs.diffs.get(6).toCode());
   }
 
   public void testCodeLine() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
     CodeLine deleted = gs.diffs.get(2).toCodeLine();
     CodeLine inserted = gs.diffs.get(3).toCodeLine();
-    assertEquals(deleted.lineNo, 3);
-    assertEquals(inserted.lineNo, 3);
+    assertEquals(3, deleted.lineNo);
+    assertEquals(3, inserted.lineNo);
 
     CodeLine deleted2 = gs.diffs.get(8).toCodeLine();
     CodeLine inserted2 = gs.diffs.get(9).toCodeLine();
-    assertEquals(deleted2.line, "System.out.println(\"This is a test code8.\");");
-    assertEquals(inserted2.line, "System.out.println(\"This is a fixed test code8.\");");
-    assertEquals(deleted2.lineNo, 3);
-    assertEquals(inserted2.lineNo, 3);
+    assertEquals("System.out.println(\"This is a test code8.\");", deleted2.line);
+    assertEquals("System.out.println(\"This is a fixed test code8.\");", inserted2.line);
+    assertEquals(3, deleted2.lineNo);
+    assertEquals(3, inserted2.lineNo);
   }
 }

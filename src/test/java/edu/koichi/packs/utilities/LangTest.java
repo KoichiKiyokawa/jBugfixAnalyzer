@@ -6,22 +6,22 @@ import edu.koichi.packs.utilities.Lang;
 
 public class LangTest extends TestCase {
   public void testCapitalize() {
-    assertEquals(Lang.capitalize("foo"), "Foo");
+    assertEquals("Foo", Lang.capitalize("foo"));
   }
 
   public void testUnCapitalize() {
-    assertEquals(Lang.uncapitalize("Bar"), "bar");
+    assertEquals("bar", Lang.uncapitalize("Bar"));
   }
 
   public void testIsCapital() {
-    assertEquals(Lang.isCapital("foo"), false);
+    assertEquals(false, Lang.isCapital("foo"));
   }
 
   public void testToggleCapital1() {
-    assertEquals(Lang.toggleCapital("foo"), "Foo");
+    assertEquals("Foo", Lang.toggleCapital("foo"));
   }
 
   public void testToggleCapital2() {
-    assertEquals(Lang.toggleCapital("Foo"), "foo");
+    assertEquals("foo", Lang.toggleCapital("Foo"));
   }
 }

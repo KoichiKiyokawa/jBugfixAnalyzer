@@ -67,10 +67,11 @@ public class CommitTest extends UseTestRepo {
 
     // + System.out.println("This is a test code10.");
     // + public static void main(String[] args) {
-    assertEquals(bugfixInsertedLineCount, 4);
+    assertEquals(4, bugfixInsertedLineCount);
   }
 
   /**
+   * ex)
    * 1 public class Test7 {
    * 2   public static void main(String[] args) {
    * 3   -    System.out.println("This is a test code7.");
@@ -80,8 +81,8 @@ public class CommitTest extends UseTestRepo {
    */
   public void testInsertedCodeLine() {
     Commit commit = new Repository(testRepoDir).commits.get(0);
-    assertEquals(commit.insertedCodeLines.size(), 2);
-    assertEquals(commit.insertedCodeLines.get(0).getCommitMessage(), "Fix Test7 and Test8");
-    assertEquals(commit.insertedCodeLines.get(0).lineNo, 3);
+    assertEquals(2, commit.insertedCodeLines.size());
+    assertEquals("Fix Test7 and Test8", commit.insertedCodeLines.get(0).getCommitMessage());
+    assertEquals(3, commit.insertedCodeLines.get(0).lineNo);
   }
 }
