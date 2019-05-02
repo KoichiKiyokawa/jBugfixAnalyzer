@@ -2,6 +2,7 @@ package edu.koichi.packs.entities;
 
 import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.utilities.RunCommand;
+import edu.koichi.packs.entities.CodeLine;
 
 public class GitShowTest extends UseTestRepo {
   public void testDiffSize() {
