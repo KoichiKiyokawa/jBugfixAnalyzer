@@ -72,12 +72,15 @@ public class CommitTest extends UseTestRepo {
 
   /**
    * ex)
-   * 1 public class Test7 {
-   * 2   public static void main(String[] args) {
-   * 3   -    System.out.println("This is a test code7.");
-   * 3   +    System.out.println("This is a fixed test code7.");
-   * 4   }
-   * 5 }
+   *
+   * <pre>
+   *    1 public class Test7 {
+   *    2   public static void main(String[] args) {
+   *    3   -    System.out.println("This is a test code7.");
+   *    3   +    System.out.println("This is a fixed test code7.");
+   *    4   }
+   *    5 }
+   * </pre>
    */
   public void testInsertedCodeLine() {
     Commit commit = new Repository(testRepoDir).commits.get(0);
