@@ -8,6 +8,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
+
 import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.entities.Commit;
 import edu.koichi.packs.entities.Repository;
@@ -17,6 +20,7 @@ public class VerifyRedundancyTest extends UseTestRepo {
   private Repository repo = new Repository(testRepoDir);
   private Path sourceFilePath = Paths.get(Repository.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
 
+  @Test
   public void testFileRead() {
     List<String> lines = new ArrayList<String>();
     try {
@@ -29,6 +33,7 @@ public class VerifyRedundancyTest extends UseTestRepo {
     assertEquals("public class Test1 {", lines.get(0));
   }
 
+  @Test
   public void testCheckSourceHasIngredient() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     Commit commit = new Commit("shasha", "Hoge");
@@ -38,10 +43,12 @@ public class VerifyRedundancyTest extends UseTestRepo {
     assertEquals(2, vRedundancy.hasIngredientInsertedLines.size());
   }
 
+  @Test
   public void testIsBugfixCommit() {
     assertEquals(true, repo.commits.get(0).isBugfixCommit());
   }
 
+  @Test
   public void testVerify() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     vRedundancy.verify();

@@ -2,20 +2,26 @@ package edu.koichi.packs.entities;
 
 import java.util.Properties;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
+
 import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.utilities.RunCommand;
 
 public class CommitTest extends UseTestRepo {
+  @Test
   public void testIsBugfixCommit() throws Exception {
     Commit commit = new Commit("hogehoge", "fix typo");
     assertEquals(commit.isBugfixCommit(), true);
   }
 
+  @Test
   public void testIsNotBugfixCommit() throws Exception {
     Commit commit = new Commit("foofoo", "Add func");
     assertEquals(commit.isBugfixCommit(), false);
   }
 
+  @Test
   public void testHasFixMessageButNotBugfixCommit() throws Exception {
     Properties properties = new Properties();
     properties.setProperty("exception_of_fix_message", "fixnum");
@@ -24,6 +30,7 @@ public class CommitTest extends UseTestRepo {
     assertEquals(commit.isBugfixCommit(), false);
   }
 
+  @Test
   public void testSeparation() throws Exception {
     this.repo = new Repository(testRepoDir);
     Commit thirdCommit = repo.commits.get(2);

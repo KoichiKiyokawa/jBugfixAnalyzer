@@ -1,10 +1,14 @@
 package edu.koichi.packs.entities;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
+
 import edu.koichi.packs.common.UseTestRepo;
 import edu.koichi.packs.utilities.RunCommand;
 import edu.koichi.packs.entities.CodeLine;
 
 public class GitShowTest extends UseTestRepo {
+  @Test
   public void testDiffSize() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
     assertEquals(12, gs.diffs.size());
@@ -45,6 +49,7 @@ public class GitShowTest extends UseTestRepo {
    * </pre>
    */
 
+   @Test
   public void testDiffFile() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
     assertEquals("public class Test7 {", gs.diffs.get(0).toCode());
@@ -56,6 +61,7 @@ public class GitShowTest extends UseTestRepo {
     assertEquals("public class Test8 {", gs.diffs.get(6).toCode());
   }
 
+  @Test
   public void testCodeLine() {
     GitShow gs = new GitShow(RunCommand.run("git show", testRepoDir));
     CodeLine deleted = gs.diffs.get(2).toCodeLine();

@@ -2,21 +2,18 @@ package edu.koichi.packs.common;
 
 import java.io.File;
 
+import org.junit.Before;
+
 import edu.koichi.packs.entities.Repository;
 import edu.koichi.packs.utilities.RunCommand;
-import junit.framework.TestCase;
 
-public class UseTestRepo extends TestCase {
+public class UseTestRepo {
   protected final String testRepoDir = "../jBugfixAnalyzer-test";
   private final String testRepoURL = "https://github.com/KoichiKiyokawa/jBugfixAnalyzer-test.git";
   protected Repository repo;
 
-  public UseTestRepo() {
-    super();
-    initTestRepo();
-  }
-
-  private void initTestRepo() {
+  @Before
+  public void setup() {
     // TODO: git clone なしでレポジトリが作れたほうが良い？
     File testRepo = new File(testRepoDir);
     if (testRepo.exists()) {
