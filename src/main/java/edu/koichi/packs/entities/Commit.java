@@ -41,12 +41,16 @@ public class Commit {
    */
   // TOOD: コメントは除外
   private void separateDiffsIntoInsertAndDelete() {
-    for (Diff diff : this.getDiffs()) {
-      if (diff.isInsertedLine()) {
-        this.insertedLines.add(diff.toCode());
-      } else if (diff.isDeletedLine()) {
-        this.deletedLines.add(diff.toCode());
+    try {
+      for (Diff diff : this.getDiffs()) {
+        if (diff.isInsertedLine()) {
+          this.insertedLines.add(diff.toCode());
+        } else if (diff.isDeletedLine()) {
+          this.deletedLines.add(diff.toCode());
+        }
       }
+    } catch (NullPointerException e) {
+      e.printStackTrace();
     }
   }
 

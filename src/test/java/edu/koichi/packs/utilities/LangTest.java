@@ -18,7 +18,7 @@ public class LangTest {
 
   @Test
   public void testIsCapital() {
-    assertEquals(false, Lang.isCapital("foo"));
+    assertFalse(Lang.isCapital("foo"));
   }
 
   @Test

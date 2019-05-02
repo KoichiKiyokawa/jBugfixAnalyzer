@@ -45,7 +45,7 @@ public class VerifyRedundancyTest extends UseTestRepo {
 
   @Test
   public void testIsBugfixCommit() {
-    assertEquals(true, repo.commits.get(0).isBugfixCommit());
+    assertTrue(repo.commits.get(0).isBugfixCommit());
   }
 
   @Test

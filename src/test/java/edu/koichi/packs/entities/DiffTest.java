@@ -7,25 +7,25 @@ public class DiffTest {
   @Test
   public void testIsInsertedLine() {
     Diff diff = new Diff("+package main");
-    assertEquals(true, diff.isInsertedLine());
+    assertTrue(diff.isInsertedLine());
   }
 
   @Test
   public void testIsInsertedLineException() {
     Diff diff = new Diff("+++ b/src/test/java/edu/koichi/packs/utilities/LangTest.java");
-    assertEquals(false, diff.isInsertedLine());
+    assertFalse(diff.isInsertedLine());
   }
 
   @Test
   public void testIsDeletedLine() {
     Diff diff = new Diff("-package main");
-    assertEquals(true, diff.isDeletedLine());
+    assertTrue(diff.isDeletedLine());
   }
 
   @Test
   public void testIsDeletedLineException() {
     Diff diff = new Diff("--- a/src/main/java/edu/koichi/packs/entities/Commit.java");
-    assertEquals(false, diff.isDeletedLine());
+    assertFalse(diff.isDeletedLine());
   }
 
   @Test

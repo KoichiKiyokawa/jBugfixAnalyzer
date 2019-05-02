@@ -14,6 +14,7 @@ public class UseTestRepo {
 
   @Before
   public void setup() {
+    Repository.relativeRepositoryPath = testRepoDir;
     // TODO: git clone なしでレポジトリが作れたほうが良い？
     File testRepo = new File(testRepoDir);
     if (testRepo.exists()) {

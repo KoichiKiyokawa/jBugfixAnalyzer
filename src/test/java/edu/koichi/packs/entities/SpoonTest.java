@@ -27,7 +27,7 @@ public class SpoonTest {
     launcher.addInputResource("../jBugfixAnalyzer-test/src/Test1.java");
     launcher.buildModel();
     CtModel model = launcher.getModel();
-    assertEquals(true, model.isBuildModelFinished());
+    assertTrue(model.isBuildModelFinished());
 
     Collection<CtPackage> packs = model.getAllPackages();
     assertEquals(1, packs.size());
@@ -70,6 +70,7 @@ public class SpoonTest {
     launcher.addInputResource("src/test/java/edu/koichi/packs/testClasses/Foo.java");
     launcher.buildModel();
     CtModel model = launcher.getModel();
-    // CtVariableReference varRef =
+    List<CtStatement> elements = model.getElements(new LineFilter());
+    elements.forEach(System.out::println);
   }
 }

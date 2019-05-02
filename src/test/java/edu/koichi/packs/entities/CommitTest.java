@@ -12,13 +12,13 @@ public class CommitTest extends UseTestRepo {
   @Test
   public void testIsBugfixCommit() throws Exception {
     Commit commit = new Commit("hogehoge", "fix typo");
-    assertEquals(commit.isBugfixCommit(), true);
+    assertTrue(commit.isBugfixCommit());
   }
 
   @Test
   public void testIsNotBugfixCommit() throws Exception {
     Commit commit = new Commit("foofoo", "Add func");
-    assertEquals(commit.isBugfixCommit(), false);
+    assertFalse(commit.isBugfixCommit());
   }
 
   @Test
@@ -27,18 +27,19 @@ public class CommitTest extends UseTestRepo {
     properties.setProperty("exception_of_fix_message", "fixnum");
 
     Commit commit = new Commit("barbar", "Add Fixnum function");
-    assertEquals(commit.isBugfixCommit(), false);
+    assertFalse(commit.isBugfixCommit());
   }
 
   @Test
   public void testSeparation() throws Exception {
     this.repo = new Repository(testRepoDir);
     Commit thirdCommit = repo.commits.get(2);
-    assertEquals(thirdCommit.message, "Fix Test10.java");
-    assertEquals(thirdCommit.insertedLines.size(), 1);
-    assertEquals(thirdCommit.insertedLines.get(0), "System.out.println(\"This is a test code10.\");");
+    assertEquals("Fix Test10.java", thirdCommit.message);
+    assertEquals(1, thirdCommit.insertedLines.size());
+    assertEquals("System.out.println(\"This is a test code10.\");", thirdCommit.insertedLines.get(0));
   }
 
+  @Test
   public void testAllInsertedLineCount() {
     this.repo = new Repository(testRepoDir);
     int allInsertedLineCount = 0;
@@ -63,6 +64,7 @@ public class CommitTest extends UseTestRepo {
     return allInsertedLineCountFromGitLog;
   }
 
+  @Test
   public void testBugfixInsertedLineCount() {
     this.repo = new Repository(testRepoDir);
     int bugfixInsertedLineCount = 0;
@@ -89,6 +91,7 @@ public class CommitTest extends UseTestRepo {
    *    5 }
    * </pre>
    */
+  @Test
   public void testInsertedCodeLine() {
     Commit commit = new Repository(testRepoDir).commits.get(0);
     assertEquals(2, commit.insertedCodeLines.size());
