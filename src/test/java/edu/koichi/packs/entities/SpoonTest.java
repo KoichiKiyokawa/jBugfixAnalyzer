@@ -3,6 +3,7 @@ package edu.koichi.packs.entities;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,15 +11,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import spoon.Launcher;
+import spoon.refactoring.CtRenameLocalVariableRefactoring;
 import spoon.reflect.CtModel;
+import spoon.reflect.code.CtLocalVariable;
 import spoon.reflect.code.CtStatement;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtPackage;
-import spoon.reflect.reference.CtVariableReference;
+import spoon.reflect.reference.CtTypeReference;
 import spoon.reflect.visitor.filter.LineFilter;
-
-import edu.koichi.packs.testClasses.Foo;
+import spoon.reflect.visitor.filter.TypeFilter;
 
 public class SpoonTest {
   @Test
@@ -72,5 +74,36 @@ public class SpoonTest {
     CtModel model = launcher.getModel();
     List<CtStatement> elements = model.getElements(new LineFilter());
     elements.forEach(System.out::println);
+  }
+
+  @Test
+  public void testRenameVar() {
+    Launcher launcher = new Launcher();
+    launcher.addInputResource("src/test/java/edu/koichi/packs/testClasses/Foo.java");
+    launcher.buildModel();
+
+    TypeFilter filterLocalVar = new TypeFilter(CtLocalVariable.class) {
+      public boolean matches(CtLocalVariable var) {
+        CtTypeReference type = var.getType();
+        return type.isPrimitive() || type.isClass();
+      }
+    };
+    CtModel model = launcher.getModel();
+    List<CtLocalVariable> vars = model.getElements(filterLocalVar);
+    vars.forEach(System.out::println);
+    int i = 0;
+    for (CtLocalVariable var : vars) {
+      new CtRenameLocalVariableRefactoring().setTarget(var).setNewName("$" + i++).refactor();
+    }
+
+    System.out.println(("---after refactoring---"));
+    List<CtElement> elements = new ArrayList<>();
+    i = 0;
+    for (CtElement elem : model.getElements(new LineFilter())) {
+      if (elem.toString().equals("super()")) continue;
+      System.out.println("" + i++ + elem);
+    }
+    System.out.println("size of elements is " + elements.size());
+    // assertEquals("int $0 = 2", vars.get(0).toString());
   }
 }
