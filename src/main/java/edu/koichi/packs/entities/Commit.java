@@ -14,10 +14,10 @@ import edu.koichi.packs.utilities.RunCommand;
 public class Commit {
   public String sha;
   public String message;
-  public List<String> insertedLines = new ArrayList<String>();
-  public List<String> deletedLines = new ArrayList<String>();
-  public List<CodeLine> insertedCodeLines = new ArrayList<CodeLine>();
-  public List<CodeLine> deletedCodeLines = new ArrayList<CodeLine>();
+  public List<String> insertedLines = new ArrayList<>();
+  public List<String> deletedLines = new ArrayList<>();
+  public List<CodeLine> insertedCodeLines = new ArrayList<>();
+  public List<CodeLine> deletedCodeLines = new ArrayList<>();
 
   public Commit(String sha, String message) {
     this.sha = sha;
@@ -60,7 +60,7 @@ public class Commit {
     String diffStr = RunCommand.run(String.format("git show %s -- *.java", this.sha),
         Repository.relativeRepositoryPath);
     String[] diffLines = diffStr.split("\n");
-    List<Diff> diffs = new ArrayList<Diff>();
+    List<Diff> diffs = new ArrayList<>();
     Arrays.stream(diffLines).forEach(diffLine -> diffs.add(new Diff(diffLine)));
     return diffs;
   }

@@ -8,7 +8,7 @@ import edu.koichi.packs.utilities.RunCommand;
 
 public class Repository {
   public static String relativeRepositoryPath;
-  public List<Commit> commits = new ArrayList<Commit>();
+  public List<Commit> commits = new ArrayList<>();
 
   public Repository(String relativeFilePath) {
     Repository.relativeRepositoryPath = relativeFilePath;
@@ -22,7 +22,7 @@ public class Repository {
   }
 
   public List<Commit> getCommits() {
-    List<Commit> commits = new ArrayList<Commit>();
+    List<Commit> commits = new ArrayList<>();
     String logStr = RunCommand.run("git log --oneline --pretty=format:%h,%s", Repository.relativeRepositoryPath);
     Arrays.stream(logStr.split("\n")).forEach(log -> {
       String[] splitedLog = log.split(",");

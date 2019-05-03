@@ -34,7 +34,7 @@ public class GitShow {
   private int startCodeLine = 0;
   private int relativeCodeLine = 0;
   private boolean isCode = false;
-  public List<Diff> diffs = new ArrayList<Diff>();
+  public List<Diff> diffs = new ArrayList<>();
 
   public GitShow(String gitShow) {
     for (String gitShowLine : gitShow.split("\n")) {

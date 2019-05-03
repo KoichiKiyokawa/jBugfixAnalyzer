@@ -23,7 +23,7 @@ public class VerifyRedundancy {
   private int allInsertedLinesCount = 0;
   private int bugfixCommitCount = 0;
   private int insertedBugfixLineCount = 0;
-  protected List<String> hasIngredientInsertedLines = new ArrayList<String>();
+  protected List<String> hasIngredientInsertedLines = new ArrayList<>();
 
   public VerifyRedundancy(Repository repo) {
     this.repo = repo;
@@ -61,7 +61,7 @@ public class VerifyRedundancy {
    */
   public boolean isCommitHasIngredientInSource(Commit commit, String sourceFilenameWithRelativePath) {
     boolean hasIngredient = false;
-    List<String> sourceFileLines = new ArrayList<String>();
+    List<String> sourceFileLines = new ArrayList<>();
     Path sourceFilePath = Paths.get(Repository.relativeRepositoryPath + "/" + sourceFilenameWithRelativePath);
     try {
       sourceFileLines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);

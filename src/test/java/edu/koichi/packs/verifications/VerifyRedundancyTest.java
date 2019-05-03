@@ -22,7 +22,7 @@ public class VerifyRedundancyTest extends UseTestRepo {
 
   @Test
   public void testFileRead() {
-    List<String> lines = new ArrayList<String>();
+    List<String> lines = new ArrayList<>();
     try {
       lines = Files.readAllLines(sourceFilePath, StandardCharsets.UTF_8);
     } catch (IOException e) {

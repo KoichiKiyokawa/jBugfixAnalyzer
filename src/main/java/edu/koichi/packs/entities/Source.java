@@ -24,6 +24,9 @@ public class Source {
     this.model = launcher.getModel();
   }
 
+  /**
+   * 変数の正規化を行う
+   */
   public void normalize() {
     // ローカル変数を抜き出すフィルター
     TypeFilter filterLocalVar = new TypeFilter(CtLocalVariable.class) {
@@ -45,9 +48,13 @@ public class Source {
     return this.model.getElements(new LineFilter());
   }
 
-  public void show() {
+  public void showStatements() {
     for (CtElement elem : this.getStatements()) {
       System.out.println(elem);
     }
+  }
+
+  public void showCode() {
+    System.out.println(this.launcher.getFactory().Code().toString());
   }
 }
