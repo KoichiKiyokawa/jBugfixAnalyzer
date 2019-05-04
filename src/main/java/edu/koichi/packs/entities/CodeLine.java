@@ -31,7 +31,7 @@ public class CodeLine {
     if (line.length() <= 1) {
       return true;
     }
-    return (isComment() || isOnlyBracket() || isImportLine());
+    return (isComment() || isOnlyBracket() || isImportLine() || isTryLine());
   }
 
   private boolean isComment() {
@@ -44,9 +44,10 @@ public class CodeLine {
   }
 
   private boolean isImportLine() {
-    if (line.length() < 6) {
-      return false;
-    }
-    return (line.substring(0, 6).equals("import"));
+    return line.startsWith("import");
+  }
+
+  private boolean isTryLine() {
+    return line.startsWith("try {");
   }
 }
