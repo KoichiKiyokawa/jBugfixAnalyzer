@@ -9,12 +9,9 @@ public class Main {
     long start = System.currentTimeMillis();
 
     String repoPath = args[0];
-    String verificationType = "not selected";
+    String verificationType = args.length < 2 ? "VerifyRedundancy" : args[1];
     System.out.println("repoPath : " + repoPath);
-    if (args.length >= 2) {
-      verificationType = args[1];
-      System.out.println("verificationType : " + verificationType);
-    }
+    System.out.println("verificationType : " + verificationType);
     Repository repo = new Repository(repoPath);
     switch (verificationType) {
     case "VerifyRedundancy":
