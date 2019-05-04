@@ -14,8 +14,8 @@ import edu.koichi.packs.utilities.RunCommand;
 public class Commit {
   public String sha;
   public String message;
-  public List<String> insertedLines = new ArrayList<>();
-  public List<String> deletedLines = new ArrayList<>();
+  public List<String> insertedLines = new ArrayList<>(); // deprecated
+  public List<String> deletedLines = new ArrayList<>(); // deprecated
   public List<CodeLine> insertedCodeLines = new ArrayList<>();
   public List<CodeLine> deletedCodeLines = new ArrayList<>();
 
