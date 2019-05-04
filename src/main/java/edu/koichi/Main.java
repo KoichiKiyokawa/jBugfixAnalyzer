@@ -7,10 +7,10 @@ public class Main {
   public static void main(String[] args) {
     long start = System.currentTimeMillis();
 
-    System.out.println(args[0]);
-    Repository repo = new Repository(args[0]);
-    VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
-    vRedundancy.verify();
+    String repoPath = args[0];
+    System.out.println(repoPath);
+    Repository repo = new Repository(repoPath);
+    new VerifyRedundancy(repo).verify();
 
     long end = System.currentTimeMillis();
     System.out.println("------------------");
