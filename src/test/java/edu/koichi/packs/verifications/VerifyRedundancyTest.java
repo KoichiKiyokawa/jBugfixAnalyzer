@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.koichi.packs.common.UseTestRepo;
+import edu.koichi.packs.entities.CodeLine;
 import edu.koichi.packs.entities.Commit;
 import edu.koichi.packs.entities.Repository;
 
@@ -37,8 +38,8 @@ public class VerifyRedundancyTest extends UseTestRepo {
   public void testCheckSourceHasIngredient() {
     VerifyRedundancy vRedundancy = new VerifyRedundancy(repo);
     Commit commit = new Commit("shasha", "Hoge");
-    commit.insertedLines.add("public class Test1 {");
-    commit.insertedLines.add("public static void main(String[] args) {");
+    commit.insertedCodeLines.add(new CodeLine(sourceFilenameWithRelativePath, 1, "public class Test1 {"));
+    commit.insertedCodeLines.add(new CodeLine(sourceFilenameWithRelativePath, 2, "public static void main(String[] args) {"));
     vRedundancy.isCommitHasIngredientInSource(commit, sourceFilePath.toString());
     assertEquals(2, vRedundancy.hasIngredientInsertedLines.size());
   }
