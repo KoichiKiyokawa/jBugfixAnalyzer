@@ -9,16 +9,20 @@ public class Main {
     long start = System.currentTimeMillis();
 
     String repoPath = args[0];
-    String verificationType = args[1];
+    String verificationType = "not selected";
     System.out.println("repoPath : " + repoPath);
-    System.out.println("verificationType : " + verificationType);
+    if (args.length >= 2) {
+      verificationType = args[1];
+      System.out.println("verificationType : " + verificationType);
+    }
     Repository repo = new Repository(repoPath);
-
     switch (verificationType) {
     case "VerifyRedundancy":
       new VerifyRedundancy(repo).verify();
+      break;
     case "VerifyRedundancyWithLevenshtein":
       new VerifyRedundancyWithLevenshtein(repo).verify();
+      break;
     default:
       new VerifyRedundancy(repo).verify();
     }
