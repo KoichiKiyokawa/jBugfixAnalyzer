@@ -44,6 +44,9 @@ public class CodeLine {
   }
 
   private boolean isImportLine() {
+    if (line.length() < 6) {
+      return false;
+    }
     return (line.substring(0, 6).equals("import"));
   }
 }
