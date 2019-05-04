@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.koichi.packs.entities.CodeLine;
 import edu.koichi.packs.entities.Commit;
 import edu.koichi.packs.entities.Repository;
 
@@ -68,10 +69,13 @@ public class VerifyRedundancy {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    for (String insertedLine : commit.insertedLines) {
+    for (CodeLine insertedCodeLine : commit.insertedCodeLines) {
+      if (insertedCodeLine.shouldIgnore()) {
+        continue;
+      }
       for (String srcline : sourceFileLines) {
-        if (isIngredient(srcline, insertedLine)) {
-          hasIngredientInsertedLines.add(insertedLine);
+        if (isIngredient(srcline, insertedCodeLine.line)) {
+          hasIngredientInsertedLines.add(insertedCodeLine.line);
           hasIngredient = true;
           break;
         }
