@@ -31,7 +31,7 @@ public class CodeLine {
     if (line.length() <= 1) {
       return true;
     }
-    return (isComment() || isOnlyBracket() || isImportLine() || isTryLine());
+    return (isComment() || isOnlyBracket() || isImportLine() || isTryLine() || isAssertLine());
   }
 
   private boolean isComment() {
@@ -49,5 +49,9 @@ public class CodeLine {
 
   private boolean isTryLine() {
     return line.startsWith("try {");
+  }
+
+  private boolean isAssertLine() {
+    return line.startsWith("assert");
   }
 }
