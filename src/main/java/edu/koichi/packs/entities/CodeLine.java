@@ -31,7 +31,7 @@ public class CodeLine {
     if (line.length() <= 1) {
       return true;
     }
-    return (this.isComment() || this.isOnlyBracket());
+    return (isComment() || isOnlyBracket() || isImportLine());
   }
 
   private boolean isComment() {
@@ -41,5 +41,9 @@ public class CodeLine {
 
   private boolean isOnlyBracket() {
     return (line.equals("}") && line.length() == 1);
+  }
+
+  private boolean isImportLine() {
+    return (line.substring(0, 6).equals("import"));
   }
 }
