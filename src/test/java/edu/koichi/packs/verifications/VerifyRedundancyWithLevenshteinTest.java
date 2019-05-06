@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.koichi.packs.common.UseTestRepo;
-import edu.koichi.packs.utilities.RunCommand;
 import edu.koichi.packs.verifications.VerifyRedundancyWithLevenshtein;
 
 public class VerifyRedundancyWithLevenshteinTest extends UseTestRepo {
@@ -32,6 +31,6 @@ public class VerifyRedundancyWithLevenshteinTest extends UseTestRepo {
     assertEquals(bugfixInsertedLineCount, vrwl.insertedBugfixLineCount);
 
     final int hasIngredientInsertedLines = 4;
-    assertEquals(hasIngredientInsertedLines, vrwl.hasIngredientInsertedLines);
+    assertEquals(hasIngredientInsertedLines, vrwl.hasIngredientInsertedLines.size());
   }
 }
