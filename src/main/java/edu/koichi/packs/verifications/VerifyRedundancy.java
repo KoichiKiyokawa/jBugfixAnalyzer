@@ -20,10 +20,10 @@ import edu.koichi.packs.entities.Repository;
  * 冗長化仮説の検証
  */
 public class VerifyRedundancy {
-  private Repository repo;
-  private int allInsertedLinesCount = 0;
-  private int bugfixCommitCount = 0;
-  private int insertedBugfixLineCount = 0;
+  public Repository repo;
+  public int allInsertedLinesCount = 0;
+  public int bugfixCommitCount = 0;
+  public int insertedBugfixLineCount = 0;
   protected List<String> hasIngredientInsertedLines = new ArrayList<>();
 
   public VerifyRedundancy(Repository repo) {
