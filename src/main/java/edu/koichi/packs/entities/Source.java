@@ -1,5 +1,10 @@
 package edu.koichi.packs.entities;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import spoon.Launcher;
@@ -56,5 +61,28 @@ public class Source {
 
   public void showCode() {
     System.out.println(this.launcher.getFactory().Code().toString());
+  }
+
+  public void writeCode() {
+    // 一時ファイルに書き出し
+    try {
+      File tmpDir = new File("tmp/");
+      if (!tmpDir.exists()) {
+        tmpDir.mkdir();
+      }
+      File file = new File("tmp/tmp.txt");
+      if (!file.exists()) {
+        file.createNewFile();
+      }
+      PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+
+      for (CtStatement statement : this.model.getElements(new LineFilter())) {
+        pw.println(statement);
+      }
+
+      pw.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
