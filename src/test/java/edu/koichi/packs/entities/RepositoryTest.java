@@ -10,9 +10,7 @@ import edu.koichi.packs.utilities.RunCommand;
 public class RepositoryTest extends UseTestRepo {
   private int initialCommitLength;
 
-  @Before
-  public void setup() {
-    this.repo = new Repository(this.testRepoDir);
+  public RepositoryTest() {
     String res = RunCommand.run("git log --oneline", this.testRepoDir); // count line
     this.initialCommitLength = res.split("\n").length;
   }
