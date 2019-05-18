@@ -73,6 +73,7 @@ public class VerifyRedundancy {
       if (insertedCodeLine.shouldIgnore()) {
         continue;
       }
+      // ある挿入行について、もとのソースコード中に存在しているか
       for (String srcline : sourceFileLines) {
         if (isIngredient(srcline, insertedCodeLine.line)) {
           hasIngredientInsertedLines.add(insertedCodeLine.line);
